@@ -1,10 +1,10 @@
 import Immutable from 'seamless-immutable';
+import { isEmpty } from 'lodash';
 
 import {
   LAYOUT_SHOW_LOADING,
   LAYOUT_HIDE_LOADING,
-  LAYOUT_CHANGE_ACTIVE,
-  LAYOUT_RESOURCES_REQUEST,
+  LAYOUT_CHANGE_ITEMS,
   LAYOUT_CHANGE_ORG,
   LAYOUT_CHANGE_LOCATION,
 } from './LayoutConstants';
@@ -27,24 +27,9 @@ export default (state = initialState, action) => {
     case LAYOUT_HIDE_LOADING:
       return state.set('isLoading', false);
 
-    case LAYOUT_CHANGE_ACTIVE:
-      if (state.items.length > 0) {
-        return state.set('activeMenu', payload.primary.title)
-          .set(
-            'items',
-            state.items.map((item) => {
-              if (item.title === payload.primary.title) {
-                return item.set('initialActive', true);
-              }
-              if (item.initialActive === true) return item.set('initialActive', false);
-              return item;
-            }),
-          );
-      }
-      return state;
-
-    case LAYOUT_RESOURCES_REQUEST:
-      return state.set('items', payload.items);
+    case LAYOUT_CHANGE_ITEMS:
+      if (!isEmpty(payload.active)) return state.set('items', payload.menuItems).set('activeMenu', payload.active);
+      return state.set('items', payload.menuItems);
 
     case LAYOUT_CHANGE_ORG:
       return state.set('currentOrganization', payload.org);

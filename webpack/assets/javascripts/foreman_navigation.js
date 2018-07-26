@@ -12,3 +12,11 @@ export const hideLoading = () => {
 export const navigateTo = (url) => {
   window.Turbolinks.visit(url);
 };
+
+export const changeLocation = (loc) => {
+  store.dispatch(LayoutActions.changeLocation(loc));
+};
+
+export const changeOrganization = (org) => {
+  store.dispatch(LayoutActions.changeOrganization(org));
+};

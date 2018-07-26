@@ -1,30 +1,26 @@
 <% 
-menus = [Menu::Manager.to_hash(:top_menu), Menu::Manager.to_hash(:admin_menu)] 
+menus = [Menu::Manager.to_hash(:top_menu), Menu::Manager.to_hash(:admin_menu), Menu::Manager.to_hash(:side_menu)] 
 menus << Menu::Manager.to_hash(:labs_menu) if Setting[:lab_features]
 
-taxonomies = { locations: show_location_tab?(), organizations: show_organization_tab?() }
+taxonomies = { locations: show_location_tab?, organizations: show_organization_tab? }
 
-locations = []
-organizations = []
+available_locations = Location.my_locations.map {
+     |location| {id: location.id, title: location.title, href: main_app.select_location_path(location)}} if show_location_tab?
 
+available_organizations =  Organization.my_organizations.map {
+    |organization| {id: organization.id, title: organization.title, href: main_app.select_organization_path(organization)}} if show_organization_tab?
 
-if show_location_tab?()
-Location.my_locations.each do |location|
-locations << {id: location.id, title: location.title, href: main_app.select_location_path(location)}
-    end
-end
+locations = { current_location: Location.current, available_locations: available_locations }
+organizations = { current_org: Organization.current, available_organizations: available_organizations }
+user = { current_user: User.current, user_dropdown: Menu::Manager.to_hash(:side_menu) }
 
-if show_organization_tab?()
-Organization.my_organizations.each do |organization|
-organizations << {id: organization.id, title: organization.title, href: main_app.select_organization_path(organization)}
-    end
-end
-
-hash = { menu: menus, logo: image_path("header_logo.svg", :class => "header-logo"),
-         notification_url: notification_recipients_path, user: User.current ,user_dropdown: Menu::Manager.to_hash(:side_menu),
-         taxonomies: taxonomies, current_location: Location.current, locations: locations,
-         current_org: Organization.current, organizations: organizations, root: main_app.root_path }
+layout_data = { menu: menus,
+         logo: image_path("header_logo.svg", :class => "header-logo"),
+         notification_url: notification_recipients_path,
+         user: user,
+         taxonomies: taxonomies, root: main_app.root_path, 
+         locations: locations, organizations: organizations }
 %>
 
 <div id="layout"></div>
-    <%= mount_react_component('Layout',"#layout", hash.to_json) %>
+    <%= mount_react_component('Layout',"#layout", layout_data.to_json) %>

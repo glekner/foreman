@@ -1,11 +1,9 @@
-import { isEmpty } from 'lodash';
-import { navigateTo } from '../../../foreman_navigation';
 
+import { navigateTo } from '../../../foreman_navigation';
 import {
   LAYOUT_SHOW_LOADING,
   LAYOUT_HIDE_LOADING,
-  LAYOUT_CHANGE_ACTIVE,
-  LAYOUT_RESOURCES_REQUEST,
+  LAYOUT_CHANGE_ITEMS,
   LAYOUT_CHANGE_LOCATION,
   LAYOUT_CHANGE_ORG,
 } from './LayoutConstants';
@@ -18,23 +16,34 @@ export const hideLoading = () => ({
   type: LAYOUT_HIDE_LOADING,
 });
 
-export const changeActiveMenu = primary => (dispatch) => {
+export const changeActiveMenu = primary => (dispatch, getState) => {
+  const menuItems = getState().layout.items.map((item) => {
+    if (primary.title === item.name) {
+      return Object.assign({}, item, {
+        active: true,
+      });
+    }
+
+    return Object.assign({}, item, {
+      active: false,
+    });
+  });
+
   dispatch({
-    type: LAYOUT_CHANGE_ACTIVE,
+    type: LAYOUT_CHANGE_ITEMS,
     payload: {
-      primary,
+      menuItems,
+      active: primary.title,
     },
   });
 };
 
-export const fetchMenuItems = menuItems => (dispatch) => {
-  const activePath = window.location.pathname;
-  const items = customItems(menuItems, activePath);
-
+export const fetchMenuItems = data => (dispatch) => {
+  const menuItems = combineMenuItems(data);
   dispatch({
-    type: LAYOUT_RESOURCES_REQUEST,
+    type: LAYOUT_CHANGE_ITEMS,
     payload: {
-      items,
+      menuItems,
     },
   });
 };
@@ -58,136 +67,85 @@ export const changeLocation = location => (dispatch) => {
   });
 };
 
-const customItems = (data, activePath) => {
+const combineMenuItems = (data) => {
   const items = [];
-
-  // Menu Items
 
   data.menu.forEach((menu) => {
     menu.forEach((item) => {
-      let activeFlag = false;
-      const childrenArray = [];
-      item.children.forEach((child) => {
-        if (child.url === activePath) activeFlag = true;
-
-        const childObject = {
-          title: isEmpty(child.name) === true ? child.name : __(child.name),
-          isDivider: child.type === 'divider' && !isEmpty(child.name),
-          onClick: () => navigateTo(child.url),
-        };
-        childrenArray.push(childObject);
-      });
-      const itemObject = {
-        title: __(item.name),
-        initialActive: activeFlag,
-        iconClass: item.icon,
-        subItems: childrenArray,
-      };
-      items.push(itemObject);
+      items.push(item);
     });
   });
+
   if (data.taxonomies.organizations) {
-    items.push(fetchOrganizations(data.organizations, activePath));
+    const anyOrg = {
+      name: 'Any Organization',
+      onClick: () => {
+        navigateTo('/organizations/clear');
+        changeOrganization('Any Organization');
+      },
+    };
+    const childrenArray = [];
+    childrenArray.push(anyOrg);
+
+    data.organizations.available_organizations.forEach((org) => {
+      const childObject = {
+        type: org.type,
+        name: org.title,
+        onClick: () => {
+          navigateTo(org.href);
+          changeOrganization(org.title);
+        },
+        url: org.href,
+        className: data.organizations.current_org.organization.name === org.title ? 'active' : '',
+      };
+      childrenArray.push(childObject);
+    });
+
+    const orgItem = {
+      type: 'sub_menu',
+      name: 'Organizations',
+      icon: 'fa fa-building',
+      children: childrenArray,
+      className: 'visible-xs-block',
+      active: false,
+    };
+    items.push(orgItem);
   }
 
   if (data.taxonomies.locations) {
-    items.push(fetchLocations(data.locations, activePath));
-  }
+    const anyLoc = {
+      name: 'Any Location',
+      onClick: () => {
+        changeLocation('Any Location');
+        navigateTo('/locations/clear');
+      },
+    };
+    const childrenArray = [];
+    childrenArray.push(anyLoc);
 
-  if (!isEmpty(data.user_dropdown)) {
-    items.push(fetchUser(data.user_dropdown[0], activePath));
+    data.locations.available_locations.forEach((loc) => {
+      const childObject = {
+        type: loc.type,
+        name: loc.title,
+        onClick: () => {
+          navigateTo(loc.href);
+          changeLocation(loc.title);
+        },
+        url: loc.href,
+        className: data.locations.current_location.location.name === loc.title ? 'active' : '',
+      };
+      childrenArray.push(childObject);
+    });
+
+    const locItem = {
+      type: 'sub_menu',
+      name: 'Locations',
+      icon: 'fa fa-globe',
+      children: childrenArray,
+      className: 'visible-xs-block',
+      active: false,
+    };
+    items.push(locItem);
   }
   return items;
-};
-
-const fetchOrganizations = (orgs, activePath) => {
-  let activeFlag = false;
-  const anyOrg = {
-    title: __('Any Organization'),
-    onClick: () => {
-      navigateTo('/organizations/clear');
-      changeOrganization('Any Organization');
-    },
-  };
-
-  const childrenArray = [];
-  childrenArray.push(anyOrg);
-
-  orgs.forEach((child) => {
-    if (child.href === activePath) activeFlag = true;
-    const childObject = {
-      title: isEmpty(child.title) === true ? child.title : __(child.title),
-      onClick: () => {
-        changeOrganization(child.title);
-        navigateTo(child.href);
-      },
-    };
-    childrenArray.push(childObject);
-  });
-
-  const orgItem = {
-    title: __('Organizations'),
-    initialActive: activeFlag,
-    iconClass: 'fa fa-building',
-    subItems: childrenArray,
-    className: 'visible-xs-block',
-  };
-  return orgItem;
-};
-
-const fetchLocations = (locations, activePath) => {
-  let activeFlag = false;
-  const anyLoc = {
-    title: __('Any Location'),
-    onClick: () => {
-      changeLocation('Any Location');
-      navigateTo('/locations/clear');
-    },
-  };
-
-  const childrenArray = [];
-  childrenArray.push(anyLoc);
-
-  locations.forEach((child) => {
-    if (child.href === activePath) activeFlag = true;
-    const childObject = {
-      title: isEmpty(child.title) === true ? child.title : __(child.title),
-      onClick: () => {
-        changeLocation(child.title);
-        navigateTo(child.href);
-      },
-    };
-    childrenArray.push(childObject);
-  });
-
-  const locItem = {
-    title: __('Locations'),
-    initialActive: activeFlag,
-    iconClass: 'fa fa-globe',
-    subItems: childrenArray,
-    className: 'visible-xs-block',
-  };
-  return locItem;
-};
-
-const fetchUser = (user, activePath) => {
-  let activeFlag = false;
-  const userSubItems = [];
-  user.children.forEach((child) => {
-    if (child.url === activePath) activeFlag = true;
-    const childObject = {
-      title: child.name,
-      onClick: () => navigateTo(child.url),
-    };
-    userSubItems.push(childObject);
-  });
-
-  const userItem = {
-    title: user.name,
-    iconClass: user.icon,
-    initialActive: activeFlag,
-    subItems: userSubItems,
-    className: 'visible-xs-block',
-  };
-  return userItem;
 };

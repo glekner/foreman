@@ -10,7 +10,6 @@ const UserDropdowns = ({
   activeKey,
   activeHref,
   user,
-  userDropdown,
   changeActiveMenu,
   notificationUrl,
   ...props
@@ -25,10 +24,10 @@ const UserDropdowns = ({
     <NavDropdown componentClass="li" id="account_menu">
       <Dropdown.Toggle useAnchor className="nav-item-iconic">
         <Icon type="fa" name="user avatar small" />
-        {user.user.firstname}{' '}{user.user.lastname}
+        {user.current_user.user.firstname}{' '}{user.current_user.user.lastname}
       </Dropdown.Toggle>
       <Dropdown.Menu>
-        {userDropdown[0].children.map((item, i) =>
+        {user.user_dropdown[0].children.map((item, i) =>
             (item.type === 'divider' ? (
               <MenuItem key={i} divider />
             ) : (
@@ -52,8 +51,6 @@ UserDropdowns.propTypes = {
   className: PropTypes.string,
   /** User Data Array */
   user: PropTypes.object,
-  /** UserDropdowns */
-  userDropdown: PropTypes.array,
   /** notification URL */
   notificationUrl: PropTypes.string,
   /** changeActiveMenu Func */
@@ -62,7 +59,6 @@ UserDropdowns.propTypes = {
 UserDropdowns.defaultProps = {
   className: '',
   user: {},
-  userDropdown: [],
   notificationUrl: '',
   changeActiveMenu: null,
 };
