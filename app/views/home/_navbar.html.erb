@@ -1,18 +1,26 @@
-<div id="vertical-nav" class="nav-pf-vertical
-  nav-pf-vertical-with-sub-menus
-  nav-pf-persistent-secondary">
-  <ul class="list-group">
-    <%= render_vertical_menu :top_menu %>
+<%
+menus = [ Menu::Manager.to_hash(:top_menu), Menu::Manager.to_hash(:admin_menu), Menu::Manager.to_hash(:side_menu) ]
+menus << Menu::Manager.to_hash(:labs_menu) if Setting[:lab_features]
 
-    <% if Setting[:lab_features] %>
-      <%= render_vertical_menu :labs_menu %>
-    <% end %>
+taxonomies = { locations: show_location_tab?, organizations: show_organization_tab? }
 
-    <%= render_vertical_menu :admin_menu %>
+available_locations = Location.my_locations.map {
+     |location| {id: location.id, title: location.title, href: main_app.select_location_path(location)}} if show_location_tab?
 
-    <%= render "home/vertical_taxonomies", :taxonomy_type => "organization", :icon_name => "fa fa-building" if SETTINGS[:organizations_enabled]  %>
-    <%= render "home/vertical_taxonomies", :taxonomy_type => "location", :icon_name => "fa fa-globe" if SETTINGS[:locations_enabled]  %>
+available_organizations =  Organization.my_organizations.map {
+    |organization| {id: organization.id, title: organization.title, href: main_app.select_organization_path(organization)}} if show_organization_tab?
 
-    <%= render_vertical_menu :side_menu, true %>
-  </ul>
-</div>
+locations = { current_location: Location.current, available_locations: available_locations }
+organizations = { current_org: Organization.current, available_organizations: available_organizations }
+user = { current_user: User.current, user_dropdown: Menu::Manager.to_hash(:side_menu) }
+
+layout_data = { menu: menus,
+         logo: image_path("header_logo.svg", :class => "header-logo"),
+         notification_url: notification_recipients_path,
+         user: user,
+         taxonomies: taxonomies, root: main_app.root_path,
+         locations: locations, organizations: organizations }
+%>
+
+<div id="layout"></div>
+    <%= mount_react_component('Layout',"#layout", layout_data.to_json) %>

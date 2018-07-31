@@ -13,7 +13,11 @@
 
   .active > a,
   .open > a {
-    background: linear-gradient(to bottom, $hover_gradient_start, $hover_gradient_end);
+    background: linear-gradient(
+      to bottom,
+      $hover_gradient_start,
+      $hover_gradient_end
+    );
   }
 
   .org-switcher > a {
@@ -34,20 +38,17 @@
   padding: 0;
   height: inherit;
 
-  a {
+  .navbar-brand-txt {
+    left: 125px;
+    position: absolute;
     color: white;
     text-transform: uppercase;
     font-weight: bold;
     font-size: 20px;
-
-    &:hover {
-      color: white;
-      text-decoration: none;
-    }
   }
 }
 
-.notifification-dropdown {
+.notification-dropdown {
   padding: 21px 12px !important;
 }
 
@@ -57,13 +58,8 @@
   }
 }
 
-.navbar-brand-text {
-  padding-left: 5px;
-  margin-top: 7px !important;
-}
-
 .navbar-pf-vertical {
-  background: image-url('navbar.png');
+  background: image-url("navbar.png");
   background-repeat: no-repeat;
   background-size: cover;
   width: 100%;
