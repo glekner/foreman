@@ -1,43 +1,103 @@
-import $ from 'jquery';
+import store from './react_app/redux';
+import * as LayoutActions from './react_app/components/Layout/LayoutActions';
 
-function markActiveMenu() {
-  const link = `[href='${window.location.pathname}']`;
-  const currentLoc = $('#location-dropdown .nav-item-iconic').text();
-  const currentOrg = $('#organization-dropdown .nav-item-iconic').text();
+export const showLoading = () => {
+  store.dispatch(LayoutActions.showLoading());
+};
 
-  $('.list-group-item.secondary-nav-item-pf')
-    .has(link)
-    .addClass('active');
-  if (currentLoc) {
-    $(`.nav-pf-secondary-nav .list-group-item:contains("${currentLoc.trim()}")`).addClass('active');
-  }
-  if (currentOrg) {
-    $(`.nav-pf-secondary-nav .list-group-item:contains("${currentOrg.trim()}")`).addClass('active');
-  }
-}
+export const hideLoading = () => {
+  store.dispatch(LayoutActions.hideLoading());
+};
 
-export function init() {
-  $().setupVerticalNavigation(false);
-  $(document).on('mouseover', '#vertical-nav', () => {
-    $('.org-switcher').removeClass('open');
+export const navigateTo = (url) => {
+  window.Turbolinks.visit(url);
+};
+
+export const changeLocation = (loc) => {
+  store.dispatch(LayoutActions.changeLocation(loc));
+};
+
+export const changeOrganization = (org) => {
+  store.dispatch(LayoutActions.changeOrganization(org));
+};
+
+export const combineMenuItems = (data) => {
+  const items = [];
+
+  data.menu.forEach((menu) => {
+    menu.forEach((item) => {
+      items.push(item);
+    });
   });
-  $(document).on('click', '.nav-pf-secondary-nav', () => {
-    $('#vertical-nav').removeClass('hover-secondary-nav-pf');
-    $('#vertical-nav').removeClass('secondary-visible-pf');
-    $('.container-pf-nav-pf-vertical').removeClass('secondary-visible-pf');
-  });
-  markActiveMenu();
-}
 
-export function activate() {
-  // a workaround to enable turbolinks works with pf vertical navigation
-  $.fn.setupVerticalNavigation.self = undefined;
-  $(document).off(
-    'mouseenter.pf.tertiarynav.data-api',
-    '.secondary-nav-item-pf',
-  );
-  $(document).off(
-    'mouseleave.pf.tertiarynav.data-api',
-    '.secondary-nav-item-pf',
-  );
-}
+  if (data.taxonomies.organizations) {
+    const anyOrg = {
+      name: 'Any Organization',
+      onClick: () => {
+        navigateTo('/organizations/clear');
+        changeOrganization('Any Organization');
+      },
+    };
+    const childrenArray = [];
+    childrenArray.push(anyOrg);
+
+    data.organizations.available_organizations.forEach((org) => {
+      const childObject = {
+        type: org.type,
+        name: org.title,
+        onClick: () => {
+          navigateTo(org.href);
+          changeOrganization(org.title);
+        },
+        url: org.href,
+      };
+      childrenArray.push(childObject);
+    });
+
+    const orgItem = {
+      type: 'sub_menu',
+      name: 'Organizations',
+      icon: 'fa fa-building',
+      children: childrenArray,
+      className: 'visible-xs-block',
+      active: false,
+    };
+    items.push(orgItem);
+  }
+
+  if (data.taxonomies.locations) {
+    const anyLoc = {
+      name: 'Any Location',
+      onClick: () => {
+        changeLocation('Any Location');
+        navigateTo('/locations/clear');
+      },
+    };
+    const childrenArray = [];
+    childrenArray.push(anyLoc);
+
+    data.locations.available_locations.forEach((loc) => {
+      const childObject = {
+        type: loc.type,
+        name: loc.title,
+        onClick: () => {
+          navigateTo(loc.href);
+          changeLocation(loc.title);
+        },
+        url: loc.href,
+      };
+      childrenArray.push(childObject);
+    });
+
+    const locItem = {
+      type: 'sub_menu',
+      name: 'Locations',
+      icon: 'fa fa-globe',
+      children: childrenArray,
+      className: 'visible-xs-block',
+      active: false,
+    };
+    items.push(locItem);
+  }
+  return items;
+};
