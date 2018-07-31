@@ -88,7 +88,7 @@ class Host::Managed < Host::Base
       :provision_interface, :interfaces, :bond_interfaces, :bridge_interfaces, :interfaces_with_identifier,
       :managed_interfaces, :facts, :facts_hash, :root_pass, :sp_name, :sp_ip, :sp_mac, :sp_subnet, :use_image,
       :multiboot, :jumpstart_path, :install_path, :miniroot, :medium, :bmc_nic, :templates_used, :owner, :owner_type,
-      :ssh_authorized_keys, :pxe_loader
+      :ssh_authorized_keys, :pxe_loader, :global_status, :get_status
   end
 
   scope :recent, lambda { |interval = Setting[:outofsync_interval]|
@@ -207,7 +207,6 @@ class Host::Managed < Host::Base
 
   if SETTINGS[:unattended]
     # handles all orchestration of smart proxies.
-    include UnattendedHelper # which also includes Foreman::Renderer
     include Orchestration
     # DHCP orchestration delegation
     delegate :dhcp?, :dhcp_records, :to => :primary_interface
@@ -232,7 +231,11 @@ class Host::Managed < Host::Base
     validates :ptable_id, :presence => {:message => N_("can't be blank unless a custom partition has been defined")},
                           :if => Proc.new { |host| host.managed && host.disk.empty? && !Foreman.in_rake? && host.pxe_build? && host.build? }
     validates :provision_method, :inclusion => {:in => Proc.new { self.provision_methods }, :message => N_('is unknown')}, :if => Proc.new {|host| host.managed?}
-    validates :medium_id, :presence => true, :if => Proc.new { |host| host.validate_media? }
+    validates :medium_id, :presence => true,
+                          :if => Proc.new { |host| host.validate_media? }
+    validates :medium_id, :inclusion => {:in => Proc.new { |host| host.operatingsystem.medium_ids },
+                                         :message => N_('must belong to host\'s operating system')},
+                          :if => Proc.new { |host| host.operatingsystem && host.medium }
     validate :provision_method_in_capabilities
     validate :short_name_periods
     before_validation :set_compute_attributes, :on => :create, :if => Proc.new { compute_attributes_empty? }
@@ -333,20 +336,21 @@ class Host::Managed < Host::Base
     end
   end
 
-  def disk_layout_template
-    if disk.present?
-      { name: 'Custom disk layout', template: disk }
-    elsif ptable.present?
-      { name: ptable.name, template: ptable.layout }
-    end
+  def disk_layout_source
+    @disk_layout_source ||= if disk.present?
+                              Foreman::Renderer::Source::String.new(name: 'Custom disk layout',
+                                                                    content: disk.tr("\r", ''))
+                            elsif ptable.present?
+                              Foreman::Renderer::Source::String.new(name: ptable.name,
+                                                                    content: ptable.layout.tr("\r", ''))
+                            end
   end
 
   # returns the host correct disk layout, custom or common
   def diskLayout
-    raise Foreman::Renderer::RenderingError, 'Neither disk nor partition table defined for host' unless disk_layout_template
-    @host = self
-    load_template_vars
-    unattended_render(disk_layout_template[:template].tr("\r", ''), disk_layout_template[:name])
+    raise Foreman::Renderer::Errors::RenderingError, 'Neither disk nor partition table defined for host' unless disk_layout_source
+    scope = Foreman::Renderer.get_scope(host: self)
+    Foreman::Renderer.render(disk_layout_source, scope)
   end
 
   # reports methods
@@ -401,8 +405,7 @@ class Host::Managed < Host::Base
 
   def populate_fields_from_facts(parser, type, source_proxy)
     super
-    operatingsystem.architectures << architecture if operatingsystem && architecture && !operatingsystem.architectures.include?(architecture)
-
+    update_os_from_facts if operatingsystem_id_changed?
     populate_facet_fields(parser, type, source_proxy)
   end
 
@@ -725,12 +728,6 @@ class Host::Managed < Host::Base
     managed && pxe_build? && build?
   end
 
-  def render_template(template)
-    @host = self
-    load_template_vars
-    unattended_render(template)
-  end
-
   def build_status_checker
     build_status = HostBuildStatus.new(self)
     build_status.check_all_statuses
@@ -826,6 +823,11 @@ class Host::Managed < Host::Base
 
   private
 
+  def update_os_from_facts
+    operatingsystem.architectures << architecture if operatingsystem && architecture && !operatingsystem.architectures.include?(architecture)
+    self.medium = nil if medium&.operatingsystems&.exclude?(operatingsystem)
+  end
+
   # Permissions introduced by plugins for this class can cause resource <-> permission
   # names mapping to fail randomly so as a safety precaution, we specify the name more explicitly.
   def permission_name(action)
@@ -877,6 +879,8 @@ class Host::Managed < Host::Base
         end
       end
     end
+
+    status = validate_association_taxonomy(:environment)
 
     if environment
       puppetclasses.select("puppetclasses.id,puppetclasses.name").distinct.each do |e|
@@ -951,5 +955,20 @@ class Host::Managed < Host::Base
     MailNotification[:host_built].deliver(self, :users => recipients) if recipients.present?
   rescue SocketError, Net::SMTPError => e
     Foreman::Logging.exception("Host has been created. Failed to send email", e)
+  end
+
+  # Ensures that object assigned in the association belongs to the taxonomies of the host.
+  # Returns true if it does, otherwise it adds a validation error and returns false.
+  def validate_association_taxonomy(association_name)
+    association = self.class.reflect_on_association(association_name)
+    raise ArgumentError, "Association #{association_name} not found" unless association
+    associated_object_id = public_send(association.foreign_key)
+    if Taxonomy.enabled_taxonomies.present? && associated_object_id.present? &&
+      association.klass.with_taxonomy_scope(organization, location).find_by(id: associated_object_id).blank?
+      errors.add(association.foreign_key, _("with id %{object_id} doesn't exist or is not assigned to proper organization and/or location") % { :object_id => associated_object_id })
+      false
+    else
+      true
+    end
   end
 end

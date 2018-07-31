@@ -20,6 +20,7 @@ require_dependency 'foreman/plugin/rbac_registry'
 require_dependency 'foreman/plugin/rbac_support'
 require_dependency 'foreman/plugin/report_scanner_registry'
 require_dependency 'foreman/plugin/report_origin_registry'
+require_dependency 'foreman/plugin/medium_providers_registry'
 
 module Foreman #:nodoc:
   class PluginNotFound < Foreman::Exception; end
@@ -40,11 +41,12 @@ module Foreman #:nodoc:
     @tests_to_skip = {}
     @report_scanner_registry = Plugin::ReportScannerRegistry.new
     @report_origin_registry = Plugin::ReportOriginRegistry.new
+    @medium_providers = Plugin::MediumProvidersRegistry.new
 
     class << self
       attr_reader   :registered_plugins
       attr_accessor :tests_to_skip, :report_scanner_registry,
-                    :report_origin_registry
+                    :report_origin_registry, :medium_providers
       private :new
 
       def def_field(*names)
@@ -112,7 +114,8 @@ module Foreman #:nodoc:
 
     def_field :name, :description, :url, :author, :author_url, :version, :path
     attr_reader :id, :logging, :provision_methods, :compute_resources, :to_prepare_callbacks,
-                :facets, :rbac_registry, :dashboard_widgets, :info_providers, :smart_proxy_references
+                :facets, :rbac_registry, :dashboard_widgets, :info_providers, :smart_proxy_references,
+                :renderer_variable_loaders
 
     # Lists plugin's roles:
     # Foreman::Plugin.find('my_plugin').registered_roles
@@ -134,6 +137,7 @@ module Foreman #:nodoc:
       @dashboard_widgets = []
       @rabl_template_extensions = {}
       @smart_proxy_references = []
+      @renderer_variable_loaders = []
     end
 
     def report_scanner_registry
@@ -332,21 +336,27 @@ module Foreman #:nodoc:
     # List of helper methods allowed for templates in safe mode
     def allowed_template_helpers(*helpers)
       in_to_prepare do
-        Foreman::Renderer::ALLOWED_HELPERS.concat(helpers).uniq!
+        Foreman::Renderer.configure do |config|
+          config.allowed_generic_helpers.concat(helpers).uniq!
+        end
       end
     end
 
     # List of variables allowed for templates in safe mode
     def allowed_template_variables(*variables)
       in_to_prepare do
-        Foreman::Renderer::ALLOWED_VARIABLES.concat(variables).uniq!
+        Foreman::Renderer.configure do |config|
+          config.allowed_variables.concat(variables).uniq!
+        end
       end
     end
 
     # List of global settings allowed for templates
     def allowed_template_global_settings(*settings)
       in_to_prepare do
-        Foreman::Renderer::ALLOWED_GLOBAL_SETTINGS.concat(settings).uniq!
+        Foreman::Renderer.configure do |config|
+          config.allowed_global_settings.concat(settings).uniq!
+        end
       end
     end
 
@@ -355,7 +365,7 @@ module Foreman #:nodoc:
     def extend_template_helpers(*mods)
       in_to_prepare do
         mods.each do |mod|
-          extend_template_helpers_by_module(mod.to_s)
+          extend_template_helpers_by_module(mod)
         end
       end
     end
@@ -488,25 +498,31 @@ module Foreman #:nodoc:
       Foreman::Telemetry.instance.add_histogram(name, description, instance_labels, buckets)
     end
 
+    def medium_providers
+      self.class.medium_providers
+    end
+
     def smart_proxy_reference(hash)
       @smart_proxy_references << ProxyReferenceRegistry.new_reference(hash)
     end
 
+    def register_renderer_variable_loader(loader_name)
+      @renderer_variable_loaders << loader_name
+    end
+
     private
+
+    def extend_template_helpers_by_module(mod)
+      Foreman::Renderer::Scope::Base.class_eval do
+        send(:include, mod.to_s.constantize)
+      end
+      allowed_template_helpers(*(mod.public_instance_methods - Module.public_instance_methods))
+    end
 
     def permission_table_exists?
       exists = Permission.connection.table_exists?(Permission.table_name)
       Rails.logger.debug("Not adding permissions from plugin #{@id} to default roles - permissions table not found") if !exists && !Rails.env.test?
       exists
-    end
-
-    def extend_template_helpers_by_module(mod)
-      mod = mod.constantize
-
-      (TemplatesController.descendants + [TemplatesController, UnattendedController, UnattendedHelper]).each do |klass|
-        klass.send(:include, mod)
-      end
-      allowed_template_helpers(*(mod.public_instance_methods - Module.public_instance_methods))
     end
   end
 end

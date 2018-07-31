@@ -198,17 +198,22 @@ class TFTPOrchestrationTest < ActiveSupport::TestCase
     expected = <<-EXPECTED
 default linux
 label linux
-kernel boot/Redhat-6.1-x86_64-vmlinuz
-append initrd=boot/Redhat-6.1-x86_64-initrd.img ks=http://ahost.com:3000/unattended/kickstart ksdevice=bootif network kssendmac
+kernel boot/centos-5-4-hZvopwDGZA-vmlinuz
+append initrd=boot/centos-5-4-hZvopwDGZA-initrd.img ks=http://ahost.com:3000/unattended/kickstart ksdevice=bootif network kssendmac
 EXPECTED
-    assert_equal template, expected.strip
+    assert_equal expected.strip, template
     assert h.build
   end
 
   test "generate_pxe_template_for_pxelinux_localboot" do
     return unless unattended?
     h = FactoryBot.create(:host, :managed)
-    as_admin { h.update_attribute :operatingsystem, operatingsystems(:centos5_3) }
+    as_admin do
+      os = operatingsystems(:centos5_3)
+      os.media << h.medium
+      os.architectures << h.architecture
+      h.update_attribute :operatingsystem, os
+    end
     assert !h.build
 
     template = h.send(:generate_pxe_template, :PXELinux).to_s.tr! '~', "\n"
@@ -235,7 +240,12 @@ EXPECTED
                                                           :template_kind => template_kinds(:pxelinux))
     Setting['local_boot_PXELinux'] = template.name
     h = FactoryBot.create(:host, :managed)
-    as_admin { h.update_attribute :operatingsystem, operatingsystems(:centos5_3) }
+    as_admin do
+      os = operatingsystems(:centos5_3)
+      os.media << h.medium
+      os.architectures << h.architecture
+      h.update_attribute :operatingsystem, os
+    end
     assert !h.build
 
     result = h.send(:generate_pxe_template, :PXELinux)
@@ -249,7 +259,12 @@ EXPECTED
                                                           :template_kind => template_kinds(:pxelinux))
     h = FactoryBot.create(:host, :managed)
     FactoryBot.create(:host_parameter, :name => 'local_boot_PXELinux', :value => template.name, :reference_id => h.id)
-    as_admin { h.update_attribute :operatingsystem, operatingsystems(:centos5_3) }
+    as_admin do
+      os = operatingsystems(:centos5_3)
+      os.media << h.medium
+      os.architectures << h.architecture
+      h.update_attribute :operatingsystem, os
+    end
     assert !h.build
 
     result = h.send(:generate_pxe_template, :PXELinux)
@@ -341,10 +356,10 @@ EXPECTED
     expected = <<-EXPECTED
 DEFAULT linux
 LABEL linux
-KERNEL boot/OpenSuse-12.3-x86_64-linux
-APPEND initrd=boot/OpenSuse-12.3-x86_64-initrd ramdisk_size=65536 install=http://download.opensuse.org/distribution/12.3/repo/oss autoyast=http://ahost.com:3000/unattended/provision textmode=1
+KERNEL boot/opensuse-vEX5RaXkI7-linux
+APPEND initrd=boot/opensuse-vEX5RaXkI7-initrd ramdisk_size=65536 install=http://download.opensuse.org/distribution/12.3/repo/oss autoyast=http://ahost.com:3000/unattended/provision textmode=1
 EXPECTED
-    assert_equal template, expected.strip
+    assert_equal expected.strip, template
     assert h.build
   end
 end

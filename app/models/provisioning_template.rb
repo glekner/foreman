@@ -86,6 +86,10 @@ class ProvisioningTemplate < Template
     super + [:template_kind, :template_combinations => [:hostgroup, :environment]]
   end
 
+  def self.default_render_scope_class
+    Foreman::Renderer::Scope::Provisioning
+  end
+
   def clone
     self.deep_clone(:include => [:operatingsystems, :organizations, :locations],
                     :except  => [:name, :locked, :default, :vendor])
@@ -138,27 +142,26 @@ class ProvisioningTemplate < Template
     "#{kind} global default"
   end
 
-  def self.global_template_name_for(kind, renderer)
+  def self.global_template_name_for(kind)
     global_setting = Setting.find_by(:name => "global_#{kind}")
     return global_setting.value if global_setting && global_setting.value.present?
     global_template_name = global_default_name(kind)
-    renderer.logger.info "Could not find user defined global template from Settings for #{kind}, falling back to #{global_template_name}"
+    Rails.logger.info "Could not find user defined global template from Settings for #{kind}, falling back to #{global_template_name}"
     global_template_name
   end
 
-  def self.build_pxe_default(renderer)
+  def self.build_pxe_default
     return [:unprocessable_entity, _("No TFTP proxies defined, can't continue")] if (proxies = SmartProxy.with_features("TFTP")).empty?
     error_msgs = []
     used_templates = []
     TemplateKind::PXE.each do |kind|
-      global_template_name = global_template_name_for(kind, renderer)
+      global_template_name = global_template_name_for(kind)
       if (default_template = find_global_default_template global_template_name, kind).nil?
         error_msgs << _("Could not find a Configuration Template with the name \"%s\", please create one.") % global_template_name
       else
         begin
           @profiles = pxe_default_combos
-          allowed_helpers = Foreman::Renderer::ALLOWED_GENERIC_HELPERS + [ :default_template_url ]
-          menu = renderer.render_safe(default_template.template, allowed_helpers, :profiles => @profiles)
+          menu = default_template.render(variables: { profiles: @profiles })
         rescue => exception
           Foreman::Logging.exception("Cannot render '#{global_template_name}'", exception)
           error_msgs << "#{exception.message} (#{kind})"
@@ -187,7 +190,8 @@ class ProvisioningTemplate < Template
 
   def self.fetch_boot_files_combo(tftp)
     @profiles.each do |combo|
-      combo[:hostgroup].operatingsystem.pxe_files(combo[:hostgroup].medium, combo[:hostgroup].architecture).each do |bootfile_info|
+      medium_provider = Foreman::Plugin.medium_providers.find_provider(combo[:hostgroup])
+      combo[:hostgroup].operatingsystem.pxe_files(medium_provider).each do |bootfile_info|
         for prefix, path in bootfile_info do
           tftp.fetch_boot_file(:prefix => prefix.to_s, :path => path)
         end
@@ -207,11 +211,12 @@ class ProvisioningTemplate < Template
       template.template_combinations.each do |combination|
         hostgroup = combination.hostgroup
         if hostgroup&.operatingsystem && hostgroup.architecture && hostgroup.medium
+          medium_provider = Foreman::Plugin.medium_providers.find_provider(hostgroup)
           combos << {
             :hostgroup => hostgroup,
             :template => template,
-            :kernel => hostgroup.operatingsystem.kernel(hostgroup.architecture),
-            :initrd => hostgroup.operatingsystem.initrd(hostgroup.architecture),
+            :kernel => hostgroup.operatingsystem.kernel(medium_provider),
+            :initrd => hostgroup.operatingsystem.initrd(medium_provider),
             :pxe_type => hostgroup.operatingsystem.pxe_type
           }
         end

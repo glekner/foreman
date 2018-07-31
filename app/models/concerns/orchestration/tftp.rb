@@ -54,22 +54,6 @@ module Orchestration::TFTP
   end
 
   def generate_pxe_template(kind)
-    # this is the only place we generate a template not via a web request
-    # therefore some workaround is required to "render" the template.
-    @kernel = host.operatingsystem.kernel(host.arch)
-    @initrd = host.operatingsystem.initrd(host.arch)
-    if host.operatingsystem.respond_to?(:mediumpath)
-      @mediapath = host.operatingsystem.mediumpath(host)
-    end
-
-    # Xen requires additional boot files.
-    if host.operatingsystem.respond_to?(:xen)
-      @xen = host.operatingsystem.xen(host.arch)
-    end
-
-    # work around for ensuring that people can use @host as well, as tftp templates were usually confusing.
-    @host = self.host
-
     return build_pxe_render(kind) if build?
     default_pxe_render(kind)
   end
@@ -79,17 +63,17 @@ module Orchestration::TFTP
   def build_pxe_render(kind)
     template = host.provisioning_template({:kind => kind})
     return unless template.present?
-    unattended_render template
+    host.render_template(template: template)
   rescue => e
     failure _("Unable to render %{kind} template '%{name}': %{e}") % { :kind => kind, :name => template.try(:name), :e => e }, e
   end
 
   def default_pxe_render(kind)
     template = ProvisioningTemplate.find_by_name(local_boot_template_name(kind))
-    raise Foreman::Exception.new(N_("Template '%s' was not found"), template_name) unless template
-    unattended_render template, template_name
+    raise Foreman::Exception.new(N_("Template '%s' was not found"), template.name) unless template
+    host.render_template(template: template)
   rescue => e
-    failure _("Unable to render '%{name}' template: %{e}") % { :name => template_name, :e => e }, e
+    failure _("Unable to render '%{name}' template: %{e}") % { :name => template.name, :e => e }, e
   end
 
   # Adds the host to the forward and reverse TFTP zones
@@ -123,7 +107,8 @@ module Orchestration::TFTP
   def setTFTPBootFiles
     logger.info "Fetching required TFTP boot files for #{host.name}"
     valid = []
-    host.operatingsystem.pxe_files(host.medium, host.architecture, host).each do |bootfile_info|
+
+    host.operatingsystem.pxe_files(host_medium_provider).each do |bootfile_info|
       for prefix, path in bootfile_info do
         valid << each_unique_feasible_tftp_proxy do |proxy|
           proxy.fetch_boot_file(:prefix => prefix.to_s, :path => path)
@@ -213,5 +198,9 @@ module Orchestration::TFTP
   def local_boot_template_name(kind)
     key = "local_boot_#{kind}"
     host.host_params[key] || Setting[key]
+  end
+
+  def host_medium_provider
+    @medium_provider ||= Foreman::Plugin.medium_providers.find_provider(self.host)
   end
 end

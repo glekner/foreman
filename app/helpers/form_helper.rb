@@ -50,7 +50,7 @@ module FormHelper
   def multiple_checkboxes(f, attr, klass, associations, options = {}, html_options = {})
     association_name = attr || ActiveModel::Naming.plural(associations)
     associated_obj = klass.send(association_name)
-    selected_ids = associated_obj.select("#{associations.table_name}.id").map(&:id)
+    selected_ids = options.delete(:selected_ids) || associated_obj.map(&:id)
     multiple_selects(f, attr, associations, selected_ids, options, html_options)
   end
 
@@ -261,7 +261,7 @@ module FormHelper
         options = options_for_submit_or_cancel(f, overwrite, args)
         f.submit(text, options) + " " + link_to(_("Cancel"), args[:cancel_path], :class => "btn btn-default")
       end
-    end + ie_multipart_fix
+    end
   end
 
   def options_for_submit_or_cancel(f, overwrite, args)
@@ -397,14 +397,6 @@ module FormHelper
           end
         end.html_safe
       end
-    end
-  end
-
-  def ie_multipart_fix
-    # This hidden input is a workaround to fix IE Multipart form data bug (https://connect.microsoft.com/IE/Feedback/Details/868498)
-    # Only add this fix for two-pane layouts, as these are the only ones that trigger the bug
-    if request.headers["X-Foreman-Layout"] == 'two-pane'
-      content_tag(:input, '', {:type => "hidden", :name => "_ie_support"})
     end
   end
 

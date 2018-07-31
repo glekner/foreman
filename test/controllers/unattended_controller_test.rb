@@ -14,6 +14,10 @@ class UnattendedControllerTest < ActionController::TestCase
     setup do
       ptable = FactoryBot.create(:ptable, :name => 'default',
                                   :operatingsystem_ids => [operatingsystems(:redhat).id])
+      media(:one).organizations << @org
+      media(:one).locations << @loc
+      media(:ubuntu).organizations << @org
+      media(:ubuntu).locations << @loc
       @rh_host = FactoryBot.create(:host, :managed, :with_dhcp_orchestration, :build => true,
                                     :operatingsystem => operatingsystems(:redhat),
                                     :ptable => ptable,
@@ -58,29 +62,21 @@ class UnattendedControllerTest < ActionController::TestCase
 
     test "should render spoof pxelinux for a host" do
       get :host_template, params: { :kind => 'PXELinux', :spoof => @rh_host.ip }, session: set_session_user
-      assert assigns(:initrd)
-      assert assigns(:kernel)
       assert_response :success
     end
 
     test "should render spoof pxegrub for a host" do
       get :host_template, params: { :kind => 'PXEGrub', :spoof => @rh_host.ip }, session: set_session_user
-      assert assigns(:initrd)
-      assert assigns(:kernel)
       assert_response :success
     end
 
     test "should render spoof iPXE for a host" do
       get :host_template, params: { :kind => 'iPXE', :spoof => @rh_host.ip }, session: set_session_user
-      assert assigns(:initrd)
-      assert assigns(:kernel)
       assert_response :success
     end
 
     test "should render spoof gpxe for a host" do
       get :host_template, params: { :kind => 'gPXE', :spoof => @rh_host.ip }, session: set_session_user
-      assert assigns(:initrd)
-      assert assigns(:kernel)
       assert_response :success
     end
 

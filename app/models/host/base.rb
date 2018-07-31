@@ -104,9 +104,8 @@ module Host
       super - [ inheritance_column ]
     end
 
-    def self.import_host(hostname, certname = nil, deprecated_proxy = nil)
+    def self.import_host(hostname, certname = nil)
       raise(::Foreman::Exception.new("Invalid Hostname, must be a String")) unless hostname.is_a?(String)
-      Foreman::Deprecation.deprecation_warning("1.19", "proxy parameter is deprecated, please use import_facts to set it") if deprecated_proxy
 
       # downcase everything
       hostname.try(:downcase!)
@@ -346,6 +345,10 @@ module Host
 
     def orchestrated?
       self.class.included_modules.include?(Orchestration)
+    end
+
+    def render_template(template:, **params)
+      template.render(host: self, **params)
     end
 
     private

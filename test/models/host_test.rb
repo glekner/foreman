@@ -635,6 +635,30 @@ class HostTest < ActiveSupport::TestCase
       assert_equal 'CentOS 6.7', host.operatingsystem.to_s
     end
 
+    test 'operatingsystem from facts resets medium if medium is for different OS' do
+      os1 = FactoryBot.create(:operatingsystem, :with_media)
+      os2 = FactoryBot.create(:operatingsystem)
+      medium = os1.media.first
+      host = FactoryBot.create(:host, :operatingsystem => os1, :medium => medium)
+      host.import_facts(:operatingsystem => os2.name, :lsbdistrelease => os2.major.to_s)
+
+      assert_equal host.operatingsystem, os2
+      assert_nil host.medium
+    end
+
+    test 'operatingsystem from facts keeps medium if medium supports OS' do
+      os1 = FactoryBot.create(:operatingsystem, :with_media)
+      os2 = FactoryBot.create(:operatingsystem)
+      medium = os1.media.first
+      medium.operatingsystems << os2
+
+      host = FactoryBot.create(:host, :operatingsystem => os1, :medium => medium)
+      host.import_facts(:operatingsystem => os2.name, :lsbdistrelease => os2.major.to_s)
+
+      assert_equal host.operatingsystem, os2
+      assert_equal host.medium, medium
+    end
+
     test 'operatingsystem not updated from facts when ignore_facts_for_operatingsystem false' do
       host = Host.import_host('host')
       assert host.import_facts(:lsbdistrelease => '6.7', :operatingsystem => 'CentOS')
@@ -792,6 +816,20 @@ class HostTest < ActiveSupport::TestCase
       assert @host.save!
       assert @host.organization.valid?
       assert @host.location.valid?
+    end
+
+    test "assign a host to environment with incorrect taxonomies" do
+      @host = FactoryBot.build(:host, :managed => false)
+      env_with_tax = FactoryBot.create(:environment,
+                                       :organizations => [@host.organization],
+                                       :locations => [@host.location])
+      env_without_tax = FactoryBot.create(:environment)
+      @host.environment = env_with_tax
+      assert @host.valid?
+
+      @host.environment = env_without_tax
+      refute @host.valid?
+      assert_match /is not assigned/, @host.errors[:environment_id].first
     end
   end
 
@@ -1040,10 +1078,15 @@ class HostTest < ActiveSupport::TestCase
 
     test "custom_disk_partition_with_erb" do
       operatingsystem = operatingsystems(:redhat)
+      arch = FactoryBot.build(:architecture)
+      medium = FactoryBot.build(:medium)
+      operatingsystem.architectures << arch
+      operatingsystem.media << medium
       host = FactoryBot.build(
         :host,
         :operatingsystem => operatingsystem,
-        :architecture => FactoryBot.build(:architecture)
+        :architecture => arch,
+        :medium => medium
       )
       host.disk = "<%= template_name %> - <%= @osver %>"
       assert host.save
@@ -3028,6 +3071,15 @@ class HostTest < ActiveSupport::TestCase
       'puppet',
       nil)
     assert host.operatingsystem.architectures.include?(host.architecture), "no association between operatingsystem and architecture"
+  end
+
+  test 'check operatingsystem and medium assocation' do
+    host = FactoryBot.create(:host, :managed, :build => true)
+    assert host.valid?
+
+    host.operatingsystem.media = []
+    refute host.valid?
+    assert_match /must belong/, host.errors[:medium_id].first
   end
 
   context "lookup value attributes" do

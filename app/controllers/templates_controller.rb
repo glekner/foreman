@@ -1,5 +1,4 @@
 class TemplatesController < ApplicationController
-  include UnattendedHelper # includes also Foreman::Renderer
   include Foreman::Controller::ProvisioningTemplates
   include Foreman::Controller::AutoCompleteSearch
   include AuditsHelper
@@ -93,7 +92,7 @@ class TemplatesController < ApplicationController
       return
     end
     @template.template = params[:template]
-    safe_render(@template)
+    safe_render(@template, Foreman::Renderer::PREVIEW_MODE)
   end
 
   def export
@@ -110,12 +109,11 @@ class TemplatesController < ApplicationController
 
   private
 
-  def safe_render(template)
-    load_template_vars
-    render :plain => unattended_render(template)
+  def safe_render(template, mode = Foreman::Renderer::REAL_MODE)
+    render :plain => template.render(host: @host, params: params, mode: mode)
   rescue => error
     Foreman::Logging.exception("Error rendering the #{template.name} template", error)
-    if error.is_a?(Foreman::Renderer::RenderingError)
+    if error.is_a?(Foreman::Renderer::Errors::RenderingError)
       text = error.message
     else
       text = _("There was an error rendering the %{name} template: %{error}") % {:name => template.name, :error => error.message}
