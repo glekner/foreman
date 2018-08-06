@@ -1,121 +1,61 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`TaxonomySwitcher rendering render switcher w/loading 1`] = `
+exports[`TaxonomySwitcher rendering render TaxonomySwitcher 1`] = `
 <Nav
   bsClass="nav"
-  className=""
+  className="navbar-iconic"
   justified={false}
   navbar={true}
   pullLeft={true}
   pullRight={false}
   stacked={false}
 >
-  <NavItem
-    activeHref=""
-    activeKey=""
-    className="dropdown org-switcher"
+  <TaxonomyDropdown
+    anyTaxonomyText="Any Organization"
+    anyTaxonomyURL="/organizations/clear"
+    currentTaxonomy="organization"
     id="organization-dropdown"
-  >
-    <a
-      className="dropdown-toggle nav-item-iconic"
-      data-toggle="dropdown"
-      href="#"
-    >
-      <span
-        className="caret"
-      />
-    </a>
-    <ul
-      className="dropdown-menu"
-    >
-      <li
-        className="dropdown-header"
-      >
-        Organization
-      </li>
-      <li>
-        <a
-          className="organizations_clear"
-          onClick={[Function]}
-        >
-          Any Organizations
-        </a>
-      </li>
-      <li>
-        <a
-          className="organizations"
-          href="/organizations"
-        >
-          Manage Organizations
-        </a>
-      </li>
-      <li
-        className="divider"
-      />
-      <li
-        key="0"
-      >
-        <a
-          className="org_menuitem"
-          data-id="aid_organizations_undefined"
-          onClick={[Function]}
-        />
-      </li>
-    </ul>
-  </NavItem>
-  <NavItem
-    activeHref=""
-    activeKey=""
-    className="dropdown org-switcher"
+    manageTaxonomyText="Manage Organizations"
+    manageTaxonomyURL="/organizations"
+    taxonomies={
+      Array [
+        Object {
+          "href": "/organizations/1-org1/select",
+          "id": 1,
+          "title": "org1",
+        },
+      ]
+    }
+    taxonomyType="Organization"
+  />
+  <TaxonomyDropdown
+    anyTaxonomyText="Any Locations"
+    anyTaxonomyURL="/locations/clear"
+    currentTaxonomy="location"
     id="location-dropdown"
-  >
-    <a
-      className="dropdown-toggle nav-item-iconic"
-      data-toggle="dropdown"
-      href="#"
-    >
-      <span
-        className="caret"
-      />
-    </a>
-    <ul
-      className="dropdown-menu"
-    >
-      <li
-        className="dropdown-header"
-      >
-        Location
-      </li>
-      <li>
-        <a
-          className="locations_clear"
-          onClick={[Function]}
-        >
-          Any Location
-        </a>
-      </li>
-      <li>
-        <a
-          className="locations"
-          href="/locations"
-        >
-          Manage Locations
-        </a>
-      </li>
-      <li
-        className="divider"
-      />
-      <li
-        key="0"
-      >
-        <a
-          className="location_menuitem"
-          data-id="aid_locations_undefined"
-          onClick={[Function]}
-        />
-      </li>
-    </ul>
-  </NavItem>
+    manageTaxonomyText="Manage Locations"
+    manageTaxonomyURL="/locations"
+    taxonomies={
+      Array [
+        Object {
+          "href": "/locations/1-yaml/select",
+          "id": 1,
+          "title": "yaml",
+        },
+        Object {
+          "href": "/locations/2-london/select",
+          "id": 2,
+          "title": "london",
+        },
+        Object {
+          "href": "/locations/3-norway/select",
+          "id": 3,
+          "title": "norway",
+        },
+      ]
+    }
+    taxonomyType="Location"
+  />
   <NavItem
     activeHref=""
     activeKey=""

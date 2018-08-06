@@ -1,9 +1,11 @@
 
-import { combineMenuItems } from '../../../foreman_navigation';
+import { isEmpty } from 'lodash';
+import { combineMenuItems } from './LayoutHelper';
+import { selectMenuItems } from './LayoutSelectors';
 import {
   LAYOUT_SHOW_LOADING,
   LAYOUT_HIDE_LOADING,
-  LAYOUT_CHANGE_ITEMS,
+  LAYOUT_UPDATE_ITEMS,
   LAYOUT_CHANGE_LOCATION,
   LAYOUT_CHANGE_ORG,
 } from './LayoutConstants';
@@ -17,22 +19,13 @@ export const hideLoading = () => ({
 });
 
 export const changeActiveMenu = primary => (dispatch, getState) => {
-  const menuItems = getState().layout.items.map((item) => {
-    if (primary.title === item.name) {
-      return Object.assign({}, item, {
-        active: true,
-      });
-    }
-
-    return Object.assign({}, item, {
-      active: false,
-    });
-  });
+  const menuItems = selectMenuItems(getState()).map(item =>
+    (primary.title === item.name ? { ...item, active: true } : { ...item, active: false }));
 
   dispatch({
-    type: LAYOUT_CHANGE_ITEMS,
+    type: LAYOUT_UPDATE_ITEMS,
     payload: {
-      menuItems,
+      menuItems: isEmpty(menuItems) ? [] : menuItems,
       active: primary.title,
     },
   });
@@ -41,9 +34,9 @@ export const changeActiveMenu = primary => (dispatch, getState) => {
 export const fetchMenuItems = data => (dispatch) => {
   const menuItems = combineMenuItems(data);
   dispatch({
-    type: LAYOUT_CHANGE_ITEMS,
+    type: LAYOUT_UPDATE_ITEMS,
     payload: {
-      menuItems,
+      menuItems: isEmpty(menuItems) ? [] : menuItems,
     },
   });
 };

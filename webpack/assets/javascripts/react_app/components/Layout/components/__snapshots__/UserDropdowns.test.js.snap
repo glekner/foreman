@@ -9,7 +9,7 @@ exports[`UserDropdown rendering render switcher w/loading 1`] = `
   <NavItem
     activeHref=""
     activeKey=""
-    className="drawer-pf-trigger dropdown notifification-dropdown"
+    className="drawer-pf-trigger dropdown notification-dropdown"
     id="notifications_container"
   >
     <Connect(OnClickOutside(notificationContainer))

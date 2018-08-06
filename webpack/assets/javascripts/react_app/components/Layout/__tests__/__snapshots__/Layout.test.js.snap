@@ -16,15 +16,20 @@ exports[`Layout rendering renders layout 1`] = `
           Object {
             "href": "/locations/1-yaml/select",
             "id": 1,
-            "name": "yaml",
+            "title": "yaml",
+          },
+          Object {
+            "href": "/locations/2-london/select",
+            "id": 2,
+            "title": "london",
+          },
+          Object {
+            "href": "/locations/3-norway/select",
+            "id": 3,
+            "title": "norway",
           },
         ],
-        "current_location": Object {
-          "location": Object {
-            "id": 1,
-            "name": "yaml",
-          },
-        },
+        "current_location": "london",
       },
       "logo": "/assets/header_logo-c9614c16f2ee399ae9cb7f36ec94b9a26bf8cf9eabaa7fe6099bf80d1f7940db.svg",
       "menu": Array [
@@ -36,10 +41,6 @@ exports[`Layout rendering renders layout 1`] = `
                 "name": "Dashboard",
                 "type": "item",
                 "url": "/",
-              },
-              Object {
-                "name": "Hello",
-                "type": "divider",
               },
               Object {
                 "name": "Facts",
@@ -58,10 +59,6 @@ exports[`Layout rendering renders layout 1`] = `
                 "name": "All Hosts",
                 "type": "item",
                 "url": "/hosts/new",
-              },
-              Object {
-                "name": "There",
-                "type": "divider",
               },
               Object {
                 "name": "Architectures",
@@ -84,10 +81,6 @@ exports[`Layout rendering renders layout 1`] = `
                 "url": "/environments",
               },
               Object {
-                "name": "Dear",
-                "type": "divider",
-              },
-              Object {
                 "name": "Architectures",
                 "type": "item",
                 "url": "/architectures",
@@ -104,10 +97,6 @@ exports[`Layout rendering renders layout 1`] = `
                 "name": "Domains",
                 "type": "item",
                 "url": "/domains",
-              },
-              Object {
-                "name": "Friend",
-                "type": "divider",
               },
               Object {
                 "name": "Realms",
@@ -127,15 +116,10 @@ exports[`Layout rendering renders layout 1`] = `
           Object {
             "href": "/organizations/1-org1/select",
             "id": 1,
-            "name": "org1",
+            "title": "org1",
           },
         ],
-        "current_org": Object {
-          "organization": Object {
-            "id": 1,
-            "name": "org1",
-          },
-        },
+        "current_org": "org1",
       },
       "root": "/",
       "taxonomies": Object {
@@ -157,17 +141,12 @@ exports[`Layout rendering renders layout 1`] = `
               Object {
                 "isDivider": false,
                 "onClick": [Function],
-                "title": "A",
-              },
-              Object {
-                "isDivider": true,
-                "onClick": [Function],
-                "title": "B",
+                "title": "Aa",
               },
               Object {
                 "isDivider": false,
                 "onClick": [Function],
-                "title": "C",
+                "title": "Cc",
               },
             ],
             "icon": "fa fa-user",
@@ -189,21 +168,21 @@ exports[`Layout rendering renders layout 1`] = `
   items={
     Array [
       Object {
-        "href": "/",
+        "href": "/a",
         "iconClass": "fa fa-tachometer",
         "initialActive": true,
         "subItems": undefined,
         "title": "Monitor",
       },
       Object {
-        "href": "/",
+        "href": "/b",
         "iconClass": "fa fa-server",
         "initialActive": false,
         "subItems": undefined,
         "title": "Hosts",
       },
       Object {
-        "href": "/",
+        "href": "/c",
         "iconClass": "fa fa-wrench",
         "initialActive": false,
         "subItems": undefined,
@@ -231,11 +210,10 @@ exports[`Layout rendering renders layout 1`] = `
       iconImg="/assets/header_logo-c9614c16f2ee399ae9cb7f36ec94b9a26bf8cf9eabaa7fe6099bf80d1f7940db.svg"
       img=""
       onClick={null}
-      title="FOREMAN"
+      title="foreman"
       titleImg=""
     />
     <TaxonomySwitcher
-      className=""
       currentLocation="Any Location"
       currentOrganization="Any Organization"
       isLoading={false}
@@ -244,7 +222,17 @@ exports[`Layout rendering renders layout 1`] = `
           Object {
             "href": "/locations/1-yaml/select",
             "id": 1,
-            "name": "yaml",
+            "title": "yaml",
+          },
+          Object {
+            "href": "/locations/2-london/select",
+            "id": 2,
+            "title": "london",
+          },
+          Object {
+            "href": "/locations/3-norway/select",
+            "id": 3,
+            "title": "norway",
           },
         ]
       }
@@ -255,7 +243,7 @@ exports[`Layout rendering renders layout 1`] = `
           Object {
             "href": "/organizations/1-org1/select",
             "id": 1,
-            "name": "org1",
+            "title": "org1",
           },
         ]
       }
@@ -286,17 +274,12 @@ exports[`Layout rendering renders layout 1`] = `
                 Object {
                   "isDivider": false,
                   "onClick": [Function],
-                  "title": "A",
-                },
-                Object {
-                  "isDivider": true,
-                  "onClick": [Function],
-                  "title": "B",
+                  "title": "Aa",
                 },
                 Object {
                   "isDivider": false,
                   "onClick": [Function],
-                  "title": "C",
+                  "title": "Cc",
                 },
               ],
               "icon": "fa fa-user",

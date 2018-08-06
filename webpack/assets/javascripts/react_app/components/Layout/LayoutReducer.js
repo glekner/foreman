@@ -4,7 +4,7 @@ import { isEmpty } from 'lodash';
 import {
   LAYOUT_SHOW_LOADING,
   LAYOUT_HIDE_LOADING,
-  LAYOUT_CHANGE_ITEMS,
+  LAYOUT_UPDATE_ITEMS,
   LAYOUT_CHANGE_ORG,
   LAYOUT_CHANGE_LOCATION,
 } from './LayoutConstants';
@@ -27,7 +27,7 @@ export default (state = initialState, action) => {
     case LAYOUT_HIDE_LOADING:
       return state.set('isLoading', false);
 
-    case LAYOUT_CHANGE_ITEMS:
+    case LAYOUT_UPDATE_ITEMS:
       if (!isEmpty(payload.active)) return state.set('items', payload.menuItems).set('activeMenu', payload.active);
       return state.set('items', payload.menuItems);
 

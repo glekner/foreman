@@ -8,19 +8,13 @@ Array [
     "initialActive": false,
     "subItems": Array [
       Object {
-        "className": undefined,
+        "className": "",
         "isDivider": false,
         "onClick": [Function],
         "title": "Dashboard",
       },
       Object {
-        "className": undefined,
-        "isDivider": true,
-        "onClick": [Function],
-        "title": "Hello",
-      },
-      Object {
-        "className": undefined,
+        "className": "",
         "isDivider": false,
         "onClick": [Function],
         "title": "Facts",
@@ -34,19 +28,13 @@ Array [
     "initialActive": false,
     "subItems": Array [
       Object {
-        "className": undefined,
+        "className": "",
         "isDivider": false,
         "onClick": [Function],
         "title": "All Hosts",
       },
       Object {
-        "className": undefined,
-        "isDivider": true,
-        "onClick": [Function],
-        "title": "There",
-      },
-      Object {
-        "className": undefined,
+        "className": "",
         "isDivider": false,
         "onClick": [Function],
         "title": "Architectures",
@@ -60,19 +48,13 @@ Array [
     "initialActive": false,
     "subItems": Array [
       Object {
-        "className": undefined,
+        "className": "",
         "isDivider": false,
         "onClick": [Function],
         "title": "Environments",
       },
       Object {
-        "className": undefined,
-        "isDivider": true,
-        "onClick": [Function],
-        "title": "Dear",
-      },
-      Object {
-        "className": undefined,
+        "className": "",
         "isDivider": false,
         "onClick": [Function],
         "title": "Architectures",
@@ -86,19 +68,13 @@ Array [
     "initialActive": false,
     "subItems": Array [
       Object {
-        "className": undefined,
+        "className": "",
         "isDivider": false,
         "onClick": [Function],
         "title": "Domains",
       },
       Object {
-        "className": undefined,
-        "isDivider": true,
-        "onClick": [Function],
-        "title": "Friend",
-      },
-      Object {
-        "className": undefined,
+        "className": "",
         "isDivider": false,
         "onClick": [Function],
         "title": "Realms",

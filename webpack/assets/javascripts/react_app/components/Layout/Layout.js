@@ -23,13 +23,13 @@ class Layout extends React.Component {
     if (items.length === 0) fetchMenuItems(data);
 
     if (!isEmpty(data.locations.current_location)
-     && currentLocation !== data.locations.current_location.location.name) {
-      changeLocation(data.locations.current_location.location.name);
+     && currentLocation !== data.locations.current_location) {
+      changeLocation(data.locations.current_location);
     }
 
     if (!isEmpty(data.organizations.current_org)
-     && currentOrganization !== data.organizations.current_org.organization.name) {
-      changeOrganization(data.organizations.current_org.organization.name);
+     && currentOrganization !== data.organizations.current_org) {
+      changeOrganization(data.organizations.current_org);
     }
   }
 
@@ -53,7 +53,7 @@ class Layout extends React.Component {
       >
         <VerticalNav.Masthead>
           <VerticalNav.Brand
-            title="FOREMAN"
+            title="foreman"
             iconImg={data.logo}
             href={data.root}
           />
@@ -79,28 +79,6 @@ class Layout extends React.Component {
 }
 
 Layout.propTypes = {
-  items: PropTypes.arrayOf(PropTypes.shape({
-    title: PropTypes.string,
-    className: PropTypes.string,
-    iconClass: PropTypes.string,
-    initialActive: PropTypes.bool,
-    subItems: PropTypes.arrayOf(PropTypes.shape({
-      title: PropTypes.string,
-      isDivider: PropTypes.bool,
-      className: PropTypes.string,
-      onClick: PropTypes.func,
-    })),
-  })),
-  data: PropTypes.shape({
-    menu: PropTypes.array,
-    locations: PropTypes.object,
-    organizations: PropTypes.object,
-    root: PropTypes.string,
-    logo: PropTypes.string,
-    notification_url: PropTypes.string,
-    taxonomies: PropTypes.object,
-    user: PropTypes.object,
-  }),
   currentOrganization: PropTypes.string,
   currentLocation: PropTypes.string,
   isLoading: PropTypes.bool,
@@ -108,6 +86,58 @@ Layout.propTypes = {
   changeActiveMenu: PropTypes.func,
   changeOrganization: PropTypes.func,
   changeLocation: PropTypes.func,
+  items: PropTypes.arrayOf(PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    className: PropTypes.string,
+    iconClass: PropTypes.string.isRequired,
+    initialActive: PropTypes.bool,
+    subItems: PropTypes.arrayOf(PropTypes.shape({
+      title: PropTypes.string,
+      isDivider: PropTypes.bool,
+      className: PropTypes.string,
+      onClick: PropTypes.func.isRequired,
+    })),
+  })),
+  data: PropTypes.shape({
+    menu: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.shape({
+      type: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      icon: PropTypes.string.isRequired,
+      children: PropTypes.any,
+    }))),
+    locations: PropTypes.shape({
+      current_location: PropTypes.string,
+      available_locations: PropTypes.arrayOf(PropTypes.shape({
+        href: PropTypes.string.isRequired,
+        id: PropTypes.number.isRequired,
+        title: PropTypes.string,
+      })),
+    }),
+    organizations: PropTypes.shape({
+      current_organization: PropTypes.string,
+      available_organizations: PropTypes.arrayOf(PropTypes.shape({
+        href: PropTypes.string.isRequired,
+        id: PropTypes.number.isRequired,
+        title: PropTypes.string,
+      })),
+    }),
+    root: PropTypes.string.isRequired,
+    logo: PropTypes.string.isRequired,
+    notification_url: PropTypes.string.isRequired,
+    taxonomies: PropTypes.shape({
+      locations: PropTypes.bool.isRequired,
+      organizations: PropTypes.bool.isRequired,
+    }),
+    user: PropTypes.shape({
+      current_user: PropTypes.object.isRequired,
+      user_dropdown: PropTypes.arrayOf(PropTypes.shape({
+        children: PropTypes.any,
+        icon: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired,
+        type: PropTypes.string.isRequired,
+      })),
+    }),
+  }),
 };
 
 Layout.defaultProps = {

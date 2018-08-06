@@ -1,7 +1,7 @@
 import {
   LAYOUT_SHOW_LOADING,
   LAYOUT_HIDE_LOADING,
-  LAYOUT_CHANGE_ITEMS,
+  LAYOUT_UPDATE_ITEMS,
   LAYOUT_CHANGE_ORG,
   LAYOUT_CHANGE_LOCATION,
 } from '../LayoutConstants';
@@ -23,18 +23,18 @@ const fixtures = {
       type: LAYOUT_HIDE_LOADING,
     },
   },
-  'should handle LAYOUT_CHANGE_ITEMS with changeActive': {
+  'should handle LAYOUT_UPDATE_ITEMS with changeActive': {
     action: {
-      type: LAYOUT_CHANGE_ITEMS,
+      type: LAYOUT_UPDATE_ITEMS,
       payload: {
         active: 'Monitor',
         menuItems: layoutMock.items,
       },
     },
   },
-  'should handle LAYOUT_CHANGE_ITEMS without changeActive': {
+  'should handle LAYOUT_UPDATE_ITEMS without changeActive': {
     action: {
-      type: LAYOUT_CHANGE_ITEMS,
+      type: LAYOUT_UPDATE_ITEMS,
       payload: {
         menuItems: layoutMock.items,
       },

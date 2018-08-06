@@ -38,25 +38,22 @@
   padding: 0;
   height: inherit;
 
-  .navbar-brand-txt {
-    padding-left: 5px;
-    margin-top: 7px !important;
-    position: absolute;
-    left: 115px;
-    color: white;
-    text-transform: uppercase;
-    font-weight: bold;
-    font-size: 20px;
-  }
+  span {
+    display: table;
 
-  .navbar-brand-icon {
-    width: 44px;
-    height: 34px;
+    .navbar-brand-txt {
+      display: table-cell;
+      vertical-align: middle;
+      color: white;
+      text-transform: uppercase;
+      font-weight: bold;
+      font-size: 20px;
+    }
   }
 }
 
-.notifification-dropdown {
-  padding: 21px 12px !important;
+.notification-dropdown {
+  padding: 20px 12px !important;
 }
 
 .org-switcher {
@@ -66,7 +63,7 @@
 }
 
 .navbar-pf-vertical {
-  background: image-url('navbar.png');
+  background: image-url("navbar.png");
   background-repeat: no-repeat;
   background-size: cover;
   width: 100%;

@@ -1,69 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Layout reducer should handle LAYOUT_CHANGE_ITEMS with changeActive 1`] = `
-Object {
-  "activeMenu": "Monitor",
-  "currentLocation": "Any Location",
-  "currentOrganization": "Any Organization",
-  "isLoading": false,
-  "items": Array [
-    Object {
-      "href": "/",
-      "iconClass": "fa fa-tachometer",
-      "initialActive": true,
-      "subItems": undefined,
-      "title": "Monitor",
-    },
-    Object {
-      "href": "/",
-      "iconClass": "fa fa-server",
-      "initialActive": false,
-      "subItems": undefined,
-      "title": "Hosts",
-    },
-    Object {
-      "href": "/",
-      "iconClass": "fa fa-wrench",
-      "initialActive": false,
-      "subItems": undefined,
-      "title": "Configure",
-    },
-  ],
-}
-`;
-
-exports[`Layout reducer should handle LAYOUT_CHANGE_ITEMS without changeActive 1`] = `
-Object {
-  "activeMenu": "",
-  "currentLocation": "Any Location",
-  "currentOrganization": "Any Organization",
-  "isLoading": false,
-  "items": Array [
-    Object {
-      "href": "/",
-      "iconClass": "fa fa-tachometer",
-      "initialActive": true,
-      "subItems": undefined,
-      "title": "Monitor",
-    },
-    Object {
-      "href": "/",
-      "iconClass": "fa fa-server",
-      "initialActive": false,
-      "subItems": undefined,
-      "title": "Hosts",
-    },
-    Object {
-      "href": "/",
-      "iconClass": "fa fa-wrench",
-      "initialActive": false,
-      "subItems": undefined,
-      "title": "Configure",
-    },
-  ],
-}
-`;
-
 exports[`Layout reducer should handle LAYOUT_CHANGE_LOCATION 1`] = `
 Object {
   "activeMenu": "",
@@ -101,6 +37,70 @@ Object {
   "currentOrganization": "Any Organization",
   "isLoading": true,
   "items": Array [],
+}
+`;
+
+exports[`Layout reducer should handle LAYOUT_UPDATE_ITEMS with changeActive 1`] = `
+Object {
+  "activeMenu": "Monitor",
+  "currentLocation": "Any Location",
+  "currentOrganization": "Any Organization",
+  "isLoading": false,
+  "items": Array [
+    Object {
+      "href": "/a",
+      "iconClass": "fa fa-tachometer",
+      "initialActive": true,
+      "subItems": undefined,
+      "title": "Monitor",
+    },
+    Object {
+      "href": "/b",
+      "iconClass": "fa fa-server",
+      "initialActive": false,
+      "subItems": undefined,
+      "title": "Hosts",
+    },
+    Object {
+      "href": "/c",
+      "iconClass": "fa fa-wrench",
+      "initialActive": false,
+      "subItems": undefined,
+      "title": "Configure",
+    },
+  ],
+}
+`;
+
+exports[`Layout reducer should handle LAYOUT_UPDATE_ITEMS without changeActive 1`] = `
+Object {
+  "activeMenu": "",
+  "currentLocation": "Any Location",
+  "currentOrganization": "Any Organization",
+  "isLoading": false,
+  "items": Array [
+    Object {
+      "href": "/a",
+      "iconClass": "fa fa-tachometer",
+      "initialActive": true,
+      "subItems": undefined,
+      "title": "Monitor",
+    },
+    Object {
+      "href": "/b",
+      "iconClass": "fa fa-server",
+      "initialActive": false,
+      "subItems": undefined,
+      "title": "Hosts",
+    },
+    Object {
+      "href": "/c",
+      "iconClass": "fa fa-wrench",
+      "initialActive": false,
+      "subItems": undefined,
+      "title": "Configure",
+    },
+  ],
 }
 `;
 

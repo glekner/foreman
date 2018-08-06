@@ -10,8 +10,16 @@ available_locations = Location.my_locations.map {
 available_organizations =  Organization.my_organizations.map {
     |organization| {id: organization.id, title: organization.title, href: main_app.select_organization_path(organization)}} if show_organization_tab?
 
-locations = { current_location: Location.current, available_locations: available_locations }
-organizations = { current_org: Organization.current, available_organizations: available_organizations }
+unless Location.current.nil?
+    currentLocation = Location.current.name
+end
+
+unless Organization.current.nil?
+    currentOrganization = Organization.current.name
+end
+
+locations = { current_location: currentLocation, available_locations: available_locations }
+organizations = { current_org: currentOrganization, available_organizations: available_organizations }
 user = { current_user: User.current, user_dropdown: Menu::Manager.to_hash(:side_menu) }
 
 layout_data = { menu: menus,

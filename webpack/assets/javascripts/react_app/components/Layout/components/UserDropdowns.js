@@ -16,7 +16,7 @@ const UserDropdowns = ({
 }) => (
   <VerticalNav.IconBar {...props}>
     <NavItem
-      className="drawer-pf-trigger dropdown notifification-dropdown"
+      className="drawer-pf-trigger dropdown notification-dropdown"
       id="notifications_container"
     >
       <NotificationContainer data={{ url: notificationUrl }} />
