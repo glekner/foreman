@@ -10,7 +10,7 @@ import BookmarkContainer from './bookmarks';
 import PasswordStrength from './PasswordStrength';
 import BreadcrumbBar from './BreadcrumbBar';
 import FactChart from './factCharts';
-import Pagination from './Pagination/Pagination';
+import Pagination from './Pagination';
 
 const componentRegistry = {
   registry: {},

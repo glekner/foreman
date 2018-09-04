@@ -2,28 +2,49 @@ import React from 'react';
 import Proptypes from 'prop-types';
 
 import { Paginator } from 'patternfly-react';
-import { getURIpage, getURIperPage, changeQuery, translatePagination } from './PaginationHelper';
+import { getURIpage, getURIperPage, translatePagination } from './PaginationHelper';
 import './pagination.scss';
 
-const Pagination = ({ data }) => {
-  const urlPage = getURIpage();
-  const urlPerPage = getURIperPage();
+class Pagination extends React.Component {
+  componentDidMount() {
+    const {
+      page, perPage, changePage, changePerPage,
+    } = this.props;
 
-  return (
+    const urlPage = getURIpage();
+    const urlPerPage = getURIperPage();
+    if (urlPage && page !== urlPage) changePage(urlPage);
+    if (urlPerPage && perPage !== urlPerPage) changePerPage(urlPerPage);
+  }
+
+  componentWillUnmount() {
+    console.log('unmounting');
+    const {
+      page, perPage, data, resetComponent,
+    } = this.props;
+    if (page !== 1 || perPage !== data.perPage) resetComponent(1, data.perPage);
+  }
+
+  render() {
+    const {
+      data, page, perPage, changePage, changePerPage,
+    } = this.props;
+    return (
       <Paginator
         pagination={{
-          page: urlPage || 1,
-          perPage: urlPerPage || data.perPage,
+          page,
+          perPage,
           perPageOptions: data.perPageOptions,
         }}
         viewType={data.viewType}
         itemCount={data.itemCount}
-        onPageSet={page => changeQuery({ page })}
-        onPerPageSelect={perPage => changeQuery({ per_page: perPage })}
+        onPageSet={changePage}
+        onPerPageSelect={changePerPage}
         messages={translatePagination(Paginator.defaultProps.messages)}
       />
-  );
-};
+    );
+  }
+}
 
 Pagination.propTypes = {
   data: Proptypes.shape({
