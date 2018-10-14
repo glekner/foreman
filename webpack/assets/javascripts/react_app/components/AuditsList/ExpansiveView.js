@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import DiffContainer from '../DiffView/DiffContainer';
 import { renderTemplatesDiff } from '../../../foreman_editor';
 import { translate as __ } from '../../common/I18n';
 
@@ -65,22 +66,7 @@ class ExpansiveView extends React.Component {
   showTemplateDiffIfAny() {
     const { template } = this.props.auditedChanges;
     if (template && template[0] !== template[1]) {
-      const textareaProp = {
-        label: __('Template diff'),
-        'data-file-name': this.props.auditTitle,
-        className: 'col-md-12 editor_source diffMode',
-        type: 'text',
-      };
-
-      return (
-        <div className="editor-section">
-          <div className="editor-container">
-            <textarea {...textareaProp} />
-          </div>
-          <input type="hidden" id="old" value={template[0]} />
-          <input type="hidden" id="new" value={template[1]} />
-        </div>
-      );
+      return <DiffContainer oldText={template[0]} newText={template[1]} />;
     }
     return null;
   }
