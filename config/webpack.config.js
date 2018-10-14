@@ -80,8 +80,8 @@ module.exports = env => {
       rules: [
         {
           test: /\.js$/,
-          // Include novnc in webpack, transpiling is needed for phantomjs (which does not support ES6) to run tests
-          exclude: /node_modules(?!\/@novnc)/,
+          // Include novnc, unidiff in webpack, transpiling is needed for phantomjs (which does not support ES6) to run tests
+          exclude: /node_modules(?!\/(@novnc|unidiff))/,
           loader: 'babel-loader',
           options: {
             'presets': [
