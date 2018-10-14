@@ -20,10 +20,10 @@ class DiffContainer extends React.Component {
   }
 
   render() {
-    const { oldText, newText } = this.props;
+    const { oldText, newText, className } = this.props;
     const { viewType } = this.state;
     return (
-      <div id="diff-container">
+      <div id="diff-container" className={className}>
         <DiffRadioButtons changeState={this.changeState} stateView={viewType} />
         <div id="diff-table">
           <DiffView oldText={oldText} newText={newText} viewType={viewType} />
@@ -36,6 +36,7 @@ class DiffContainer extends React.Component {
 DiffContainer.propTypes = {
   oldText: PropTypes.string.isRequired,
   newText: PropTypes.string.isRequired,
+  className: PropTypes.string,
 };
 
 export default DiffContainer;
