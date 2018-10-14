@@ -16,7 +16,7 @@ class DiffContainer extends React.Component {
   }
 
   changeState(viewType) {
-    this.setState({ viewType: viewType.toLowerCase() });
+    this.setState({ viewType });
   }
 
   render() {

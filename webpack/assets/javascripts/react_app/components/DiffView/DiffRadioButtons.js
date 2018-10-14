@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { ButtonGroup, Button } from 'patternfly-react';
+import { translate } from '../../common/I18n';
 
 const btnClass = (stateView, btnView) =>
   classNames('diff-button', { active: stateView === btnView });
@@ -13,7 +14,7 @@ const radioButton = (stateView, btnView, changeState) => (
     onClick={() => changeState(btnView)}
     bsStyle={stateView === btnView ? 'primary' : 'default'}
   >
-    {btnView}
+    {translate(btnView)}
   </Button>
 );
 

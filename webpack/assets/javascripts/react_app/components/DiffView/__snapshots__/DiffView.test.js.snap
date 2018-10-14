@@ -34,5 +34,6 @@ exports[`DiffView rendering render DiffView 1`] = `
   }
   markEdits={[Function]}
   optimizeSelection={false}
+  viewType="split"
 />
 `;
