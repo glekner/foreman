@@ -13,6 +13,7 @@ import Pagination from './Pagination/Pagination';
 import AuditsList from './AuditsList';
 import SearchBar from './SearchBar';
 import Layout from './Layout';
+import Editor from './Editor/Editor';
 
 const componentRegistry = {
   registry: {},
@@ -74,6 +75,7 @@ const coreComponets = [
   { name: 'Pagination', type: Pagination },
   { name: 'AuditsList', type: AuditsList },
   { name: 'Layout', type: Layout },
+  { name: 'Editor', type: Editor },
 ];
 
 componentRegistry.registerMultiple(coreComponets);
