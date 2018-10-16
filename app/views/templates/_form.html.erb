@@ -45,13 +45,8 @@
         </div>
 
         <div class="col-md-12">
-          <div class="editor-container">
-            <%= render :partial => 'editor/toolbar', :locals => { :show_preview => true, :show_import => !@template.locked?} %>
-
-            <%= alert :class => 'alert-danger hide', :id => 'preview_error', :close => false %>
-            <%= textarea_f f, :template, :class => "editor_source", :label =>:none, :disabled => @template.locked?, :size => "max",
-                            :'data-file-name' => @template.name, :'data-render-path' => url_for(template_hash_for_member(@template, 'preview')) %>
-          </div>
+            <div id="react-ace"></div>
+              <%= mount_react_component('Editor', "#react-ace", @template.to_json) %>
         </div>
       </div>
 

@@ -1,0 +1,59 @@
+#editor-dropdowns {
+  float: right;
+
+  #mode-dropdown, #keybindings-dropdown, #themes-dropdown {
+    min-width: 85px;
+    margin-right: 5px;
+  }
+
+  #editor-dropdowns {
+    min-width: 85px;
+    text-align: center;
+  }
+}
+
+.diff-button {
+  width: 60px;
+}
+
+#fullscreen-btn, #import-btn {
+  width: 40px !important;
+}
+
+.ace_editor_form {
+  position: relative !important;
+  height: 360px !important;
+  width: 100% !important;
+}
+
+.ace_editor_modal {
+  width: 100% !important;
+  height: -webkit-fill-available !important;
+}
+
+.editor-modal {
+  .modal-content { 
+    height: -webkit-fill-available;
+  }
+  .modal-dialog {
+    padding: 15px;
+    width: auto !important;
+
+    .modal-body {
+      padding: 0;
+      background-color: #363636;
+
+      .ace_editor {
+        border: none;
+      }
+    }
+
+    .modal-header.monokai {
+      background-color: #363636;
+
+      .pficon-close {
+        color: #fff;
+      }
+    }
+  }
+}
