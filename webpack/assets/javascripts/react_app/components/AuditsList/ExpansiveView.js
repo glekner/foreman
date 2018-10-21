@@ -65,7 +65,10 @@ class ExpansiveView extends React.Component {
 
   showTemplateDiffIfAny() {
     const { template } = this.props.auditedChanges;
+    debugger;
+
     if (template && template[0] !== template[1]) {
+      debugger;
       return <DiffContainer oldText={template[0]} newText={template[1]} />;
     }
     return null;

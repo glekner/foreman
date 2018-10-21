@@ -5,6 +5,7 @@ class BreadcrumbsSwitcherTest < IntegrationTestWithJavascript
     visit bookmarks_path
     click_link 'foo'
     click_button 'switcher'
+    require 'pry'; binding.pry
     click_link "#{bookmarks(:three).id}-three"
 
     within("#edit_bookmark_#{bookmarks(:three).id}") do
