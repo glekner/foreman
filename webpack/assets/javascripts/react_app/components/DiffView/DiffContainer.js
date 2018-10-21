@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import { ButtonGroup, Button } from 'patternfly-react';
 
 import DiffView from './DiffView';
@@ -13,40 +14,34 @@ class DiffContainer extends React.Component {
     };
   }
 
-  onUnifiedClick() {
-    this.setState({ viewType: 'unified' });
-  }
-
-  onSplitClick() {
-    this.setState({ viewType: 'split' });
-  }
-
   render() {
     const { oldText, newText } = this.props;
+    const { viewType } = this.state;
+    const btnClass = type => classNames('diff-button', { active: viewType === type });
     return (
       <div id="diff-container">
         <div id="diff-radio-buttons">
           <ButtonGroup>
             <Button
-              className={this.state.viewType === 'split' ? 'diff-button active' : 'diff-button'}
+              className={btnClass('split')}
               id="split-btn"
-              onClick={() => this.onSplitClick()}
-              bsStyle={this.state.viewType === 'split' ? 'primary' : 'default'}
+              onClick={() => this.setState({ viewType: 'split' })}
+              bsStyle={viewType === 'split' ? 'primary' : 'default'}
             >
               Split
             </Button>
             <Button
-              className={this.state.viewType === 'unified' ? 'diff-button active' : 'diff-button'}
+              className={btnClass('unified')}
               id="unified-btn"
-              onClick={() => this.onUnifiedClick()}
-              bsStyle={this.state.viewType === 'unified' ? 'primary' : 'default'}
+              onClick={() => this.setState({ viewType: 'unified' })}
+              bsStyle={viewType === 'unified' ? 'primary' : 'default'}
             >
               Unified
             </Button>
           </ButtonGroup>
         </div>
         <div id="diff-table">
-          <DiffView oldText={oldText} newText={newText} viewType={this.state.viewType} />
+          <DiffView oldText={oldText} newText={newText} viewType={viewType} />
         </div>
       </div>
     );

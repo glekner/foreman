@@ -8,7 +8,7 @@ import './diffview.scss';
 
 const getDiff = (oldText, newText) => {
   const diffText = formatLines(diffLines(oldText, newText), { context: 3 });
-  // These two lines are faked to mock git diff output
+  // these two lines are faked to mock git diff output
   const header = ['diff --git a/a b/b', 'index 0000000..1111111 100644'];
   return `${header.join('\n')}\n${diffText}`;
 };

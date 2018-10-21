@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import DiffContainer from '../DiffView/DiffContainer';
-import { renderTemplatesDiff } from '../../../foreman_editor';
 import { translate as __ } from '../../common/I18n';
 
 const renderListItems = items =>
@@ -53,22 +52,9 @@ const showAuditChanges = (actionDisplayName, auditedChangesWithIdToLabel, detail
 };
 
 class ExpansiveView extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.inputRef = React.createRef();
-  }
-
-  componentDidMount() {
-    renderTemplatesDiff(this.inputRef.current);
-  }
-
   showTemplateDiffIfAny() {
     const { template } = this.props.auditedChanges;
-    debugger;
-
     if (template && template[0] !== template[1]) {
-      debugger;
       return <DiffContainer oldText={template[0]} newText={template[1]} />;
     }
     return null;
@@ -83,7 +69,7 @@ class ExpansiveView extends React.Component {
     } = this.props;
 
     return (
-      <div ref={this.inputRef} className="grid-container">
+      <div className="grid-container">
         { this.showTemplateDiffIfAny() }
         { showAuditChanges(actionDisplayName, auditedChangesWithIdToLabel, details) }
         {
