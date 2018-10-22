@@ -14,6 +14,7 @@ const EditorNavbar = ({
   changeState,
   importFile,
   activeRadio,
+  isDiff,
 }) => (
   <div className="navbar navbar-form navbar-full-width navbar-editor">
     <ButtonGroup>
@@ -26,6 +27,7 @@ const EditorNavbar = ({
         Input
       </Button>
       <Button
+        disabled={isDiff}
         className={activeRadio === 'diff' ? 'diff-button active' : 'diff-button'}
         id="diff-btn"
         onClick={() => changeState('activeRadio', 'diff')}
@@ -74,7 +76,7 @@ const EditorNavbar = ({
       <Button
         className='diff-button'
         id="import-btn"
-        onClick={() => changeState('showModal', true)}
+        // onClick={() => changeState('showModal', true)}
         bsStyle='link'
       >
       <Icon size="lg" type="fa" name ="download" />

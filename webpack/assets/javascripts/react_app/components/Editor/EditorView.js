@@ -20,9 +20,9 @@ const EditorView = ({
 }) => (
   <AceEditor
     value={value}
-    mode={mode}
-    theme={theme}
-    keyboardHandler={keyBinding === 'default' ? null : keyBinding}
+    mode={mode.toLowerCase()}
+    theme={theme.toLowerCase()}
+    keyboardHandler={keyBinding === 'Default' ? null : keyBinding.toLowerCase()}
     onChange={onChange}
     name={name}
     className={className}

@@ -2,6 +2,7 @@ import React from 'react';
 // import PropTypes from 'prop-types';
 import { bindMethods } from '../../common/helpers';
 
+import DiffContainer from '../DiffView/DiffContainer';
 import EditorView from './EditorView';
 import EditorNavbar from './EditorNavbar';
 import EditorModal from './EditorModal';
@@ -45,6 +46,9 @@ class Editor extends React.Component {
     const onChange = (editorValue, event) => {
       this.changeState('value', editorValue);
     };
+
+    const isDiff = () => data.provisioning_template.template === value;
+
     return (
       <div id="editor-container">
         <EditorNavbar
@@ -58,18 +62,25 @@ class Editor extends React.Component {
           changeState={this.changeState}
           importFile={this.importFile}
           importFileRef={this.importFileRef}
+          isDiff={isDiff()}
         />
-        <EditorView
-          value={value}
-          name={editorName}
-          mode={mode.toLowerCase()}
-          theme={theme.toLowerCase()}
-          keyBinding={keyBinding.toLowerCase()}
-          onChange={onChange}
-          readOnly={data.provisioning_template.locked}
-          className="ace_editor_form"
-        />
+        {activeRadio === 'input' ? (
+          <EditorView
+            key="editorView"
+            value={value}
+            name={editorName}
+            mode={mode}
+            theme={theme}
+            keyBinding={keyBinding}
+            onChange={onChange}
+            readOnly={data.provisioning_template.locked}
+            className="ace_editor_form"
+          />
+        ) : (
+          <DiffContainer oldText={this.props.data.provisioning_template.template} newText={value} />
+        )}
         <EditorModal
+          key="editorModal"
           changeState={this.changeState}
           name={editorName}
           mode={mode}
@@ -77,7 +88,9 @@ class Editor extends React.Component {
           keybind={keyBinding}
           readOnly={data.provisioning_template.locked}
           showModal={showModal}
+          template={data.provisioning_template.template}
           editorValue={value}
+          activeRadio={activeRadio}
         />
       </div>
     );
