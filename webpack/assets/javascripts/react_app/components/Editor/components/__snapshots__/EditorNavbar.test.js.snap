@@ -1,0 +1,111 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EditorNavbar rendring renders EditorNavbar 1`] = `
+<div
+  className="navbar navbar-form navbar-full-width navbar-editor"
+>
+  <ButtonGroup
+    block={false}
+    bsClass="btn-group"
+    justified={false}
+    vertical={false}
+  >
+    <EditorRadioButton
+      btnView="input"
+      disabled={false}
+      icon={null}
+      onClick={[Function]}
+      stateView="input"
+      title="Editor"
+    />
+    <EditorRadioButton
+      btnView="diff"
+      disabled={false}
+      icon={null}
+      onClick={[Function]}
+      stateView="input"
+      title="Changes"
+    />
+    <EditorRadioButton
+      btnView="preview"
+      disabled={false}
+      icon={
+        Object {
+          "name": "play-circle",
+          "type": "fa",
+        }
+      }
+      key="radioBtn"
+      onClick={[Function]}
+      stateView="input"
+      title="Preview"
+    />
+    <OnClickOutside(TypeaheadContainer(WrappedTypeahead))
+      align="justify"
+      className="hidden"
+      clearButton={true}
+      eventTypes={
+        Array [
+          "mousedown",
+          "touchstart",
+        ]
+      }
+      excludeScrollbar={false}
+      key="previewTypeAhead"
+      labelKey="host"
+      onChange={[Function]}
+      options={
+        Array [
+          "host1",
+          "host2",
+        ]
+      }
+      outsideClickIgnoreClass="ignore-react-onclickoutside"
+      placeholder="Pick a Host..."
+      preventDefault={false}
+      stopPropagation={false}
+    />
+  </ButtonGroup>
+  <EditorOptions
+    changeState={[Function]}
+    diffViewType="split"
+    importFile={[Function]}
+    isDiff={true}
+    isMasked={false}
+    keyBinding="Default"
+    keyBindings={
+      Array [
+        "Default",
+        "Emacs",
+        "Vim",
+      ]
+    }
+    mode="Ruby"
+    modes={
+      Array [
+        "Text",
+        "Json",
+        "Ruby",
+        "Html_ruby",
+        "Sh",
+        "Xml",
+        "Yaml",
+      ]
+    }
+    revertChanges={[Function]}
+    selectedView="input"
+    showHide={true}
+    showImport={true}
+    showPreview={true}
+    template="<? />"
+    theme="Monokai"
+    themes={
+      Array [
+        "Github",
+        "Monokai",
+      ]
+    }
+    toggleModal={[Function]}
+  />
+</div>
+`;

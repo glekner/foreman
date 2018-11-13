@@ -1,0 +1,141 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Editor reducer should handle EDITOR_CHANGE_STATE 1`] = `
+Object {
+  "diffViewType": "split",
+  "editorName": "editor",
+  "errorText": "",
+  "hosts": Object {},
+  "isMasked": false,
+  "isMaximized": false,
+  "isRendering": false,
+  "keyBinding": "Default",
+  "mode": "Ruby",
+  "readOnly": false,
+  "renderedValue": "",
+  "selectedView": "input",
+  "showError": false,
+  "theme": "Monokai",
+  "value": "</>",
+}
+`;
+
+exports[`Editor reducer should handle EDITOR_EXEC_PREVIEW 1`] = `
+Object {
+  "diffViewType": "split",
+  "editorName": "editor",
+  "errorText": "",
+  "hosts": Object {},
+  "isMasked": false,
+  "isMaximized": false,
+  "isRendering": false,
+  "keyBinding": "Default",
+  "mode": "Ruby",
+  "readOnly": false,
+  "renderedValue": undefined,
+  "selectedView": "input",
+  "showError": false,
+  "theme": "Monokai",
+  "value": "",
+}
+`;
+
+exports[`Editor reducer should handle EDITOR_IMPORT_FILE 1`] = `
+Object {
+  "diffViewType": "split",
+  "editorName": "editor",
+  "errorText": "",
+  "hosts": Object {},
+  "isMasked": false,
+  "isMaximized": false,
+  "isRendering": false,
+  "keyBinding": "Default",
+  "mode": "Ruby",
+  "readOnly": false,
+  "renderedValue": "",
+  "selectedView": "input",
+  "showError": false,
+  "theme": "Monokai",
+  "value": "</>",
+}
+`;
+
+exports[`Editor reducer should handle EDITOR_INITIALIZE 1`] = `
+Object {
+  "diffViewType": "split",
+  "editorName": "editor",
+  "errorText": "",
+  "hosts": Object {},
+  "isMasked": false,
+  "isMaximized": false,
+  "isRendering": false,
+  "keyBinding": "Default",
+  "mode": "Ruby",
+  "readOnly": false,
+  "renderedValue": "",
+  "selectedView": "input",
+  "showError": false,
+  "theme": "Monokai",
+  "value": "newValue",
+}
+`;
+
+exports[`Editor reducer should handle EDITOR_MODAL_TOGGLE 1`] = `
+Object {
+  "diffViewType": "split",
+  "editorName": "editor",
+  "errorText": "",
+  "hosts": Object {},
+  "isMasked": false,
+  "isMaximized": true,
+  "isRendering": false,
+  "keyBinding": "Default",
+  "mode": "Ruby",
+  "readOnly": false,
+  "renderedValue": "",
+  "selectedView": "input",
+  "showError": false,
+  "theme": "Monokai",
+  "value": "",
+}
+`;
+
+exports[`Editor reducer should handle EDITOR_REVERT_CHANGES 1`] = `
+Object {
+  "diffViewType": "split",
+  "editorName": "editor",
+  "errorText": "",
+  "hosts": Object {},
+  "isMasked": false,
+  "isMaximized": false,
+  "isRendering": false,
+  "keyBinding": "Default",
+  "mode": "Ruby",
+  "readOnly": false,
+  "renderedValue": "",
+  "selectedView": "input",
+  "showError": false,
+  "theme": "Monokai",
+  "value": "</>",
+}
+`;
+
+exports[`Editor reducer should return the initial state 1`] = `
+Object {
+  "diffViewType": "split",
+  "editorName": "editor",
+  "errorText": "",
+  "hosts": Object {},
+  "isMasked": false,
+  "isMaximized": false,
+  "isRendering": false,
+  "keyBinding": "Default",
+  "mode": "Ruby",
+  "readOnly": false,
+  "renderedValue": "",
+  "selectedView": "input",
+  "showError": false,
+  "theme": "Monokai",
+  "value": "",
+}
+`;
