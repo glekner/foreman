@@ -19,3 +19,15 @@ function updateVisibilityAfterInputTypeChange(select) {
   fieldset.find('div.custom_input_type_fields').hide();
   fieldset.find(`div.${select.val()}_input_type`).show();
 }
+
+export function snippetChanged(item) {
+  const checked = $(item).is(':checked');
+
+  $('#kind_selector').toggle(!checked);
+  $('#snippet_message').toggle(checked);
+  $('#association').toggle(!checked);
+  if (checked) {
+    $('#ptable_os_family').val('');
+    $('#ptable_os_family').trigger('change');
+  }
+}

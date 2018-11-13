@@ -1,0 +1,117 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EditorNavbar rendring renders EditorNavbar 1`] = `
+<div
+  className="navbar navbar-form navbar-full-width navbar-editor"
+>
+  <Nav
+    bsClass="nav"
+    className="nav nav-tabs nav-tabs-pf nav-tabs-pf-secondary"
+    justified={false}
+    pullLeft={false}
+    pullRight={false}
+    stacked={false}
+  >
+    <EditorRadioButton
+      btnView="input"
+      disabled={false}
+      icon={null}
+      onClick={[Function]}
+      stateView="input"
+      title="Editor"
+    />
+    <EditorRadioButton
+      btnView="diff"
+      disabled={false}
+      icon={null}
+      onClick={[Function]}
+      stateView="input"
+      title="Changes"
+    />
+    <EditorRadioButton
+      btnView="preview"
+      disabled={false}
+      icon={null}
+      onClick={[Function]}
+      stateView="input"
+      title="Preview"
+    />
+    <OnClickOutside(TypeaheadContainer(WrappedTypeahead))
+      align="justify"
+      className="hidden"
+      clearButton={true}
+      eventTypes={
+        Array [
+          "mousedown",
+          "touchstart",
+        ]
+      }
+      excludeScrollbar={false}
+      key="previewTypeAhead"
+      labelKey="host"
+      onChange={[Function]}
+      options={
+        Array [
+          "host1",
+          "host2",
+        ]
+      }
+      outsideClickIgnoreClass="ignore-react-onclickoutside"
+      placeholder="Pick a Host..."
+      preventDefault={false}
+      stopPropagation={false}
+    />
+  </Nav>
+  <EditorOptions
+    changeState={[Function]}
+    diffViewType="split"
+    hosts={
+      Object {
+        "host1": 1,
+        "host2": 2,
+      }
+    }
+    importFile={[Function]}
+    isDiff={true}
+    isMasked={false}
+    isRendering={false}
+    keyBinding="Default"
+    keyBindings={
+      Array [
+        "Default",
+        "Emacs",
+        "Vim",
+      ]
+    }
+    mode="Ruby"
+    modes={
+      Array [
+        "Text",
+        "Json",
+        "Ruby",
+        "Html_ruby",
+        "Sh",
+        "Xml",
+        "Yaml",
+      ]
+    }
+    previewTemplate={[Function]}
+    renderPath="/render/path"
+    revertChanges={[Function]}
+    selectedView="input"
+    showHide={true}
+    showImport={true}
+    showPreview={true}
+    template="<? />"
+    theme="Monokai"
+    themes={
+      Array [
+        "Github",
+        "Monokai",
+      ]
+    }
+    toggleModal={[Function]}
+    value="value"
+  />
+</div>
+`;

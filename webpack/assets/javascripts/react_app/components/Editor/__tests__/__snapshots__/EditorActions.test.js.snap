@@ -1,0 +1,98 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Editor actions should change mode to Html 1`] = `
+Array [
+  Array [
+    Object {
+      "payload": Object {
+        "newState": Object {
+          "mode": "Html",
+        },
+      },
+      "type": "EDITOR_CHANGE_STATE",
+    },
+  ],
+]
+`;
+
+exports[`Editor actions should importFile 1`] = `Array []`;
+
+exports[`Editor actions should initializeEditor 1`] = `
+Array [
+  Array [
+    Object {
+      "payload": Object {
+        "hosts": Object {
+          "host2": 2,
+          "host3": 3,
+        },
+        "isMasked": false,
+        "isRendering": false,
+        "readOnly": true,
+        "selectedView": "input",
+        "showError": false,
+        "value": "<? />",
+      },
+      "type": "EDITOR_INITIALIZE",
+    },
+  ],
+]
+`;
+
+exports[`Editor actions should initializeEditor unlocked 1`] = `
+Array [
+  Array [
+    Object {
+      "payload": Object {
+        "hosts": Object {
+          "host2": 2,
+          "host3": 3,
+        },
+        "isRendering": false,
+        "readOnly": false,
+        "renderedValue": "",
+        "selectedView": "input",
+        "showError": false,
+        "value": "<? />",
+      },
+      "type": "EDITOR_INITIALIZE",
+    },
+  ],
+]
+`;
+
+exports[`Editor actions should not change state 1`] = `Array []`;
+
+exports[`Editor actions should previewTemplate and fail 1`] = `Array []`;
+
+exports[`Editor actions should previewTemplate and succeed 1`] = `
+Array [
+  Array [
+    Object {
+      "payload": Object {
+        "value": "< renderedData />",
+      },
+      "type": "EDITOR_EXEC_PREVIEW",
+    },
+  ],
+]
+`;
+
+exports[`Editor actions should revertChanges 1`] = `
+Array [
+  Array [
+    Object {
+      "payload": Object {
+        "value": "<template />",
+      },
+      "type": "EDITOR_REVERT_CHANGES",
+    },
+  ],
+]
+`;
+
+exports[`Editor actions should toggleModal 1`] = `
+Object {
+  "type": "EDITOR_MODAL_TOGGLE",
+}
+`;

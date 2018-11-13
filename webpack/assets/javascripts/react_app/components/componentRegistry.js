@@ -23,6 +23,7 @@ import ChartBox from './statistics/ChartBox';
 import ConfigReports from './ConfigReports/ConfigReports';
 import DiffModal from './ConfigReports/DiffModal';
 import { WrapperFactory } from './wrapperFactory';
+import Editor from './Editor';
 
 // Pages
 import AuditsPage from '../pages/AuditsPage/AuditsPage';
@@ -136,6 +137,7 @@ const coreComponets = [
     data: true,
     store: false,
   },
+  { name: 'Editor', type: Editor },
 
   // Pages
   { name: 'AuditsPage', type: AuditsPage },
