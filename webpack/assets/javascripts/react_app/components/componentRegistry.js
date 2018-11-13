@@ -24,6 +24,7 @@ import ChartBox from './statistics/ChartBox';
 import ConfigReports from './ConfigReports/ConfigReports';
 import DiffModal from './ConfigReports/DiffModal';
 import { WrapperFactory } from './wrapperFactory';
+import Editor from './Editor';
 
 const componentRegistry = {
   registry: {},
@@ -135,6 +136,7 @@ const coreComponets = [
     data: true,
     store: false,
   },
+  { name: 'Editor', type: Editor },
 ];
 
 componentRegistry.registerMultiple(coreComponets);
