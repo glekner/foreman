@@ -135,9 +135,8 @@ module ApplicationHelper
 
   def display_delete_if_authorized(options = {}, html_options = {})
     text = options.delete(:text) || _("Delete")
-    method = options.delete(:method) || :delete
-    options = {:auth_action => :destroy}.merge(options)
-    html_options = { :data => { :confirm => _('Are you sure?') }, :method => method }.merge(html_options)
+    onclick = 'tfm.configReportsModalDiff.deleteModal(this);'
+    html_options = { :onclick => onclick }.merge(options)
     display_link_if_authorized(text, options, html_options)
   end
 
@@ -147,7 +146,7 @@ module ApplicationHelper
   # +html_options+ : Hash containing html options for the link or span
   def display_link_if_authorized(name, options = {}, html_options = {})
     if authorized_for(options)
-      link_to(name, options, html_options)
+      link_to(name, '#', html_options)
     else
       ""
     end
