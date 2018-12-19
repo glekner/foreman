@@ -1,0 +1,5 @@
+{
+  "generator-react-domain": {
+    "componentsPath": "webpack/assets/javascripts/react_app/components"
+  }
+}
