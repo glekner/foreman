@@ -1,6 +1,7 @@
 /* eslint-disable no-alert */
 import React from 'react';
 import PropTypes from 'prop-types';
+import Async from 'react-select/lib/Async';
 
 import {
   Button,
@@ -86,6 +87,7 @@ class EditorOptions extends React.Component {
 
   render() {
     const {
+      hosts,
       showHide,
       isMasked,
       isDiff,
@@ -93,6 +95,7 @@ class EditorOptions extends React.Component {
       importFile,
       revertChanges,
       showImport,
+      showPreview,
       changeState,
       toggleModal,
       selectedView,
@@ -105,6 +108,29 @@ class EditorOptions extends React.Component {
       template,
     } = this.props;
 
+    const renderHost = selectedHosts => {
+      console.log(selectedHosts);
+    };
+
+    const customStyles = {
+      control: (provided, state) => ({
+        ...provided,
+        minHeight: 20,
+        height: 30,
+        marginTop: 2,
+      }),
+      menu: (provided, state) => ({
+        ...provided,
+        zIndex: 999,
+      }),
+    };
+    const options = hosts.map(host => ({
+      value: host.value,
+      label: host.label,
+    }));
+
+    console.log(options);
+
     return (
       <div id="editor-dropdowns">
         {selectedView === 'diff' && (
@@ -113,7 +139,20 @@ class EditorOptions extends React.Component {
             changeState={viewType => changeState({ diffViewType: viewType })}
           />
         )}
-        <h4 id="divider">|</h4>
+        {showPreview && (
+          <Async
+            styles={customStyles}
+            isSearchable
+            isClearable
+            options={options}
+            onChange={renderHost}
+            onSelectResetsInput={false}
+            onBlurResetsInput={false}
+            placeholder="Preview a Host..."
+            className="preview_select"
+          />
+        )}
+        {/* <h4 id="divider">|</h4> */}
         {showHide && (
           <OverlayTrigger
             delayShow={500}
@@ -236,6 +275,7 @@ class EditorOptions extends React.Component {
 }
 
 EditorOptions.propTypes = {
+  hosts: PropTypes.array.isRequired,
   mode: PropTypes.string.isRequired,
   theme: PropTypes.string.isRequired,
   keyBinding: PropTypes.string.isRequired,
@@ -249,6 +289,7 @@ EditorOptions.propTypes = {
   importFile: PropTypes.func.isRequired,
   selectedView: PropTypes.string.isRequired,
   showImport: PropTypes.bool.isRequired,
+  showPreview: PropTypes.bool.isRequired,
   showHide: PropTypes.bool,
   isMasked: PropTypes.bool.isRequired,
   isDiff: PropTypes.bool.isRequired,

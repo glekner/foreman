@@ -11,7 +11,7 @@ import {
 
 const initialState = Immutable({
   value: '',
-  hosts: {},
+  hosts: [],
   renderedValue: '',
   errorText: '',
   mode: 'Ruby',

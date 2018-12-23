@@ -36,10 +36,11 @@ export const initializeEditor = props => dispatch => {
   if (showError) initialState.showError = false;
 
   if (hosts && hosts.length !== 0) {
-    initialState.hosts = Object.assign(
-      {},
-      ...hosts.map(element => ({ [element.host.name]: element.host.id }))
-    );
+    initialState.hosts = hosts.map(element => ({
+      label: element.host.name,
+      value: element.host.id,
+    }));
+    console.log(initialState.hosts);
   }
 
   dispatch({

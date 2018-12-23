@@ -10,6 +10,15 @@
 
 .navbar-full-width {
   width: 100%;
+
+  .nav-tabs-pf-secondary {
+    float: left;
+    border-bottom: none;
+
+    a {
+      background: unset !important;
+    }
+  }
 }
 
 .navbar-nav.navbar-right.navbar-editor {
@@ -22,6 +31,7 @@
 
 .editor-container.fullscreen {
   height: 82vh !important;
+
   .navbar-editor {
     margin: 0;
   }

@@ -102,6 +102,13 @@
   height: 40px;
   min-height: unset !important;
 
+  .preview_select {
+    display: inline-block;
+    width: 300px;
+    float: left;
+    margin-right: 5px;
+  }
+
   .btn-group {
     padding: 4px;
   }
@@ -154,11 +161,6 @@
       width: 275px;
     }
   }
-}
-
-.editor-button {
-  outline: none !important;
-  width: 75px;
 }
 
 #hide-btn {

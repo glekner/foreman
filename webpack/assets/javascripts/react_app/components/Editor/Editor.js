@@ -152,7 +152,7 @@ Editor.propTypes = {
   toggleModal: PropTypes.func.isRequired,
   renderedValue: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
-  hosts: PropTypes.object.isRequired,
+  hosts: PropTypes.array.isRequired,
   editorName: PropTypes.string.isRequired,
   diffViewType: PropTypes.string.isRequired,
   mode: PropTypes.string.isRequired,
