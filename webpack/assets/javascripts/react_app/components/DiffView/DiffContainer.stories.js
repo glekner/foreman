@@ -6,7 +6,7 @@ import Story from '../../../../../stories/components/Story';
 
 storiesOf('Components/Diff', module)
   .addDecorator(withKnobs)
-  .add('DiffView', () => (
+  .add('DiffContainer', () => (
     <Story narrow>
       <DiffContainer
         oldText={text('Old Text', 'Old Text')}

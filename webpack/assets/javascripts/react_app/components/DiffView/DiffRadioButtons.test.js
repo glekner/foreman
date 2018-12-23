@@ -1,4 +1,4 @@
-import { radioMock } from './DiffView.fixtures';
+import { radioMock } from './DiffContainer.fixtures';
 import { testComponentSnapshotsWithFixtures } from '../../common/testHelpers';
 
 import DiffRadioButtons from './DiffRadioButtons';
@@ -7,7 +7,7 @@ const fixtures = {
   'render DiffRadioButtons': radioMock,
 };
 
-describe('DiffView', () => {
+describe('DiffRadioButton', () => {
   describe('rendering', () =>
     testComponentSnapshotsWithFixtures(DiffRadioButtons, fixtures));
 });

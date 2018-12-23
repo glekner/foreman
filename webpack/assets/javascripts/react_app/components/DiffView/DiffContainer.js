@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { bindMethods } from '../../common/helpers';
+import { DiffView } from 'patternfly-react-extensions';
 
-import DiffView from './DiffView';
+import { bindMethods } from '../../common/helpers';
 import DiffRadioButtons from './DiffRadioButtons';
 import './diffview.scss';
 
@@ -22,6 +22,8 @@ class DiffContainer extends React.Component {
   render() {
     const { patch, oldText, newText } = this.props;
     const { viewType } = this.state;
+    const emptyState = <h3>No Diff</h3>;
+
     return (
       <div id="diff-container">
         <DiffRadioButtons changeState={this.changeState} stateView={viewType} />
@@ -31,6 +33,7 @@ class DiffContainer extends React.Component {
             oldText={oldText}
             newText={newText}
             viewType={viewType}
+            emptyState={emptyState}
           />
         </div>
       </div>

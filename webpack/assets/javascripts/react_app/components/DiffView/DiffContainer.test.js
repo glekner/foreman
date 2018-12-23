@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import { diffMock } from './DiffView.fixtures';
+import { diffMock } from './DiffContainer.fixtures';
 import { testComponentSnapshotsWithFixtures } from '../../common/testHelpers';
 
 import DiffContainer from './DiffContainer';

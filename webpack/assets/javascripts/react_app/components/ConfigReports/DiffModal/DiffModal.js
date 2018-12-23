@@ -1,9 +1,8 @@
 import React from 'react';
-import { Modal, Icon, Button } from 'patternfly-react';
+import { Modal, Icon, Button, DiffView } from 'patternfly-react';
 import PropTypes from 'prop-types';
 
 import { noop } from '../../../common/helpers';
-import DiffView from '../../DiffView/DiffView';
 import DiffRadioButtons from '../../DiffView/DiffRadioButtons';
 
 import './diffmodal.scss';

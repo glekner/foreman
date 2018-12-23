@@ -14,6 +14,13 @@
   overflow: auto;
   clear: both;
 
+  .diff-pf {
+    table-layout: fixed;
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: unset;
+  }
+
   .diff-line {
     line-height: 1.7;
     font-family:
@@ -53,3 +60,28 @@
     }
   }
 }
+
+// .diff-gutter-col {
+//   width: 7ch;
+// }
+
+// .diff-gutter-omit {
+//   height: 0;
+// }
+
+// .diff-gutter-omit:before {
+//   content: " ";
+//   display: block;
+//   white-space: pre;
+//   width: 2px;
+//   height: 100%;
+//   margin-left: 4.6ch;
+//   overflow: hidden;
+//   background-color: #cb2a1d;
+// }
+
+// .diff td {
+//   vertical-align: top;
+//   padding-top: 0;
+//   padding-bottom: 0;
+// }
