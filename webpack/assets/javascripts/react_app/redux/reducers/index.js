@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
 import { reducer as form } from 'redux-form';
+import { loadingBarReducer } from 'react-redux-loading-bar';
 import bookmarks from './bookmarks';
 import statistics from './statistics';
 import hosts from './hosts';
@@ -27,6 +28,7 @@ export function combineReducersAsync(asyncReducers) {
     ...searchBarReducers,
     ...diffModalReducers,
     factChart,
+    loadingBar: loadingBarReducer,
   });
 }
 

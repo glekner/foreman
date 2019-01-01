@@ -1,12 +1,17 @@
+import {
+  showLoading as showBar,
+  hideLoading as hideBar,
+} from 'react-redux-loading-bar';
+
 import store from './react_app/redux';
 import * as LayoutActions from './react_app/components/Layout/LayoutActions';
 
 export const showLoading = () => {
-  store.dispatch(LayoutActions.showLoading());
+  store.dispatch(showBar());
 };
 
 export const hideLoading = () => {
-  store.dispatch(LayoutActions.hideLoading());
+  store.dispatch(hideBar());
 };
 
 export const changeLocation = loc => {

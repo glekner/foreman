@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Nav, Spinner } from 'patternfly-react';
+import { Nav } from 'patternfly-react';
 import { noop } from '../../../common/helpers';
 
-import NavItem from './NavItem';
 import TaxonomyDropdown from './TaxonomyDropdown';
 
 const TaxonomySwitcher = ({
@@ -42,11 +41,6 @@ const TaxonomySwitcher = ({
         anyTaxonomyURL="/locations/clear"
         manageTaxonomyURL="/locations"
       />
-    )}
-    {isLoading && (
-      <NavItem id="vertical-spinner">
-        <Spinner size="md" inverse loading />
-      </NavItem>
     )}
   </Nav>
 );

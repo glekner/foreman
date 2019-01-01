@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import LoadingBar from 'react-redux-loading-bar';
 
 import { VerticalNav } from 'patternfly-react';
 import { noop } from '../../common/helpers';
@@ -78,11 +79,15 @@ class Layout extends React.Component {
         {...this.props}
       >
         <VerticalNav.Masthead>
+          <div id="loading-div">
+            <LoadingBar updateTime={0} className="loading-bar" />
+          </div>
           <VerticalNav.Brand
             title={data.brand}
             iconImg={data.logo}
             href={data.root}
           />
+
           <TaxonomySwitcher
             taxonomiesBool={data.taxonomies}
             currentLocation={currentLocation}

@@ -79,9 +79,14 @@
   outline: none;
 }
 
-#vertical-spinner {
-  margin-top: 15px;
-  margin-left: 5px;
+#loading-div {
+  height: 0;
+}
+
+.loading-bar {
+  background-color: #39a5dc;
+  height: 3px;
+  position: absolute;
 }
 
 .navbar-header {
