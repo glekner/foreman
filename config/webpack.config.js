@@ -234,7 +234,8 @@ module.exports = env => {
       host: devServer.host,
       port: devServer.port,
       headers: { 'Access-Control-Allow-Origin': '*' },
-      hot: true
+      hot: true,
+      https: true
     };
     // Source maps
     config.devtool = 'inline-source-map';
