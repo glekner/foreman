@@ -234,7 +234,13 @@ module.exports = env => {
       host: devServer.host,
       port: devServer.port,
       headers: { 'Access-Control-Allow-Origin': '*' },
-      hot: true
+      hot: true,
+      proxy: {
+        '/api': {
+           target: `ws://localhost:5000`,
+           ws: true
+        }
+      }
     };
     // Source maps
     config.devtool = 'inline-source-map';

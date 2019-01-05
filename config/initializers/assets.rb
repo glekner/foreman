@@ -16,6 +16,7 @@ Foreman::Application.configure do |app|
   # Precompile additional assets.
   # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
   # Rails.application.config.assets.precompile += %w( search.js )
+  Rails.configuration.webpack.dev_server.https = true
 
   #  config.assets.precompile += %w()
   javascript = %w(compute_resource
