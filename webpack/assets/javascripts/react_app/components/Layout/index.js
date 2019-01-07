@@ -11,7 +11,7 @@ import {
   selectIsLoading,
 } from './LayoutSelectors';
 
-import Layout from './Layout';
+import Layout from './components';
 
 // map state to props
 const mapStateToProps = state => ({

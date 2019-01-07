@@ -8,7 +8,7 @@ import {
 } from './PasswordStrengthSelectors';
 import reducer from './PasswordStrengthReducer';
 
-import PasswordStrength from './PasswordStrength';
+import PasswordStrength from './loadablePS';
 
 // map state to props
 const mapStateToProps = ({ passwordStrength }) => ({

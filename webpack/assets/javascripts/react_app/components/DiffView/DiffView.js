@@ -1,10 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Loadable from 'react-loadable';
 
-import { parseDiff, Diff, markCharacterEdits } from 'react-diff-view';
 import { formatLines, diffLines } from 'unidiff';
 import 'react-diff-view/index.css';
 import './diffview.scss';
+
+const LoadingComponent = () => <div> Loading... </div>;
+
+const Diff = Loadable({
+  loader: () =>
+    import(/* webpackChunkName: 'react-diff-view' */ 'react-diff-view'),
+  loading: LoadingComponent,
+});
+
+const parseDiff = Loadable({
+  loader: () =>
+    import(/* webpackChunkName: 'react-diff-view' */ 'react-diff-view'),
+  loading: LoadingComponent,
+});
+
+const markCharacterEdits = Loadable({
+  loader: () =>
+    import(/* webpackChunkName: 'react-diff-view' */ 'react-diff-view'),
+  loading: LoadingComponent,
+});
 
 const getDiff = (oldText, newText) => {
   const diffText = formatLines(diffLines(oldText, newText), { context: 3 });

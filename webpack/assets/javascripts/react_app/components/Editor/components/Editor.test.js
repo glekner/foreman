@@ -2,7 +2,7 @@ import React from 'react';
 import { mount } from 'enzyme';
 
 import { testComponentSnapshotsWithFixtures } from '../../../common/testHelpers';
-import Editor from '../Editor';
+import Editor from './Editor';
 import { editorOptions } from '../Editor.fixtures';
 
 const didMountStubs = () => ({

@@ -2,12 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { VerticalNav } from 'patternfly-react';
-import { noop } from '../../common/helpers';
+import { noop } from '../../../common/helpers';
 
-import { getActive, getCurrentPath, handleMenuClick } from './LayoutHelper';
-import TaxonomySwitcher from './components/TaxonomySwitcher';
-import UserDropdowns from './components/UserDropdowns';
-import './layout.scss';
+import { getActive, getCurrentPath, handleMenuClick } from '../LayoutHelper';
+import TaxonomySwitcher from './TaxonomySwitcher';
+import UserDropdowns from './UserDropdowns';
+import '../layout.scss';
 
 class Layout extends React.Component {
   componentDidMount() {

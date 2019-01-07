@@ -2,12 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { ToastNotification } from 'patternfly-react';
 
-import { noop } from '../../common/helpers';
-import DiffView from '../DiffView/DiffView';
-import EditorView from './components/EditorView';
-import EditorNavbar from './components/EditorNavbar';
-import EditorModal from './components/EditorModal';
-import './editor.scss';
+import { noop } from '../../../common/helpers';
+import DiffView from '../../DiffView/DiffView';
+import EditorView from './EditorView';
+import EditorNavbar from './EditorNavbar';
+import EditorModal from './EditorModal';
+import '../editor.scss';
 
 class Editor extends React.Component {
   componentDidMount() {

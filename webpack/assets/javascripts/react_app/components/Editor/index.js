@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import * as actions from './EditorActions';
 import reducer from './EditorReducer';
 
-import Editor from './Editor';
+import Editor from './components';
 
 // map state to props
 const mapStateToProps = ({ editor }) => ({
