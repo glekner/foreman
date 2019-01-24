@@ -17,27 +17,27 @@ import './editor.scss';
 class Editor extends React.Component {
   componentDidMount() {
     const {
-      data: { template, locked, type, hosts },
-      readOnly,
-      isMasked,
-      selectedView,
-      isRendering,
-      renderedValue,
-      showError,
+      data: { hosts, locked, template, type },
       initializeEditor,
+      isMasked,
+      isRendering,
+      readOnly,
+      renderedValue,
+      selectedView,
+      showError,
     } = this.props;
 
     const initializeData = {
-      template,
-      locked,
-      type,
       hosts,
-      readOnly,
       isMasked,
-      selectedView,
       isRendering,
+      locked,
+      readOnly,
       renderedValue,
+      selectedView,
       showError,
+      template,
+      type,
     };
     initializeEditor(initializeData);
   }
@@ -45,39 +45,48 @@ class Editor extends React.Component {
   render() {
     const {
       data: {
+        name,
+        renderPath,
         showHide,
         showImport,
         showPreview,
         template,
-        name,
-        renderPath,
         title,
       },
-      value,
-      hosts,
-      mode,
-      theme,
-      keyBinding,
-      selectedView,
-      renderedValue,
-      editorName,
+      changeDiffViewType,
+      changeEditorValue,
+      changeSetting,
+      changeTab,
       diffViewType,
-      changeState,
-      importFile,
-      revertChanges,
-      previewTemplate,
-      toggleModal,
-      readOnly,
-      showError,
+      dismissErrorToast,
+      editorName,
       errorText,
+      hosts,
+      importFile,
       isMasked,
       isMaximized,
       isRendering,
+      keyBinding,
+      mode,
+      previewTemplate,
+      readOnly,
+      renderedValue,
+      revertChanges,
+      selectedView,
+      showError,
+      theme,
+      toggleMaskValue,
+      toggleModal,
+      toggleRenderView,
+      value,
     } = this.props;
 
     return (
       <div id="editor-container">
         <EditorNavbar
+          changeDiffViewType={changeDiffViewType}
+          changeTab={changeTab}
+          changeSetting={changeSetting}
           modes={EDITOR_MODES}
           themes={EDITOR_THEMES}
           keyBindings={EDITOR_KEYBINDINGS}
@@ -88,25 +97,26 @@ class Editor extends React.Component {
           diffViewType={diffViewType}
           template={template}
           selectedView={selectedView}
-          changeState={changeState}
-          toggleModal={toggleModal}
+          isDiff={template ? value !== template : false}
+          isMasked={isMasked}
+          isRendering={isRendering}
+          importFile={importFile}
           showImport={showImport}
           showPreview={showPreview}
           showHide={showHide}
-          importFile={importFile}
           revertChanges={revertChanges}
           previewTemplate={previewTemplate}
           hosts={hosts}
           renderPath={renderPath}
-          isDiff={template ? value !== template : false}
-          isMasked={isMasked}
-          isRendering={isRendering}
+          toggleMaskValue={toggleMaskValue}
+          toggleRenderView={toggleRenderView}
+          toggleModal={toggleModal}
         />
         <ToastNotification
           id="preview_error_toast"
           type="error"
           className={showError ? '' : 'hidden'}
-          onDismiss={() => changeState({ showError: false })}
+          onDismiss={() => dismissErrorToast()}
         >
           {errorText}
         </ToastNotification>
@@ -117,7 +127,7 @@ class Editor extends React.Component {
           mode={isRendering ? 'Text' : mode}
           theme={theme}
           keyBinding={keyBinding}
-          onChange={isRendering ? noop : changeState}
+          onChange={isRendering ? noop : changeEditorValue}
           readOnly={readOnly || isRendering}
           className={selectedView !== 'diff' ? 'ace_editor_form' : 'hidden'}
           isMasked={isMasked}
@@ -134,7 +144,8 @@ class Editor extends React.Component {
         </div>
         <EditorModal
           key="editorModal"
-          changeState={changeState}
+          changeEditorValue={changeEditorValue}
+          changeDiffViewType={changeDiffViewType}
           name={editorName}
           title={title}
           toggleModal={toggleModal}
@@ -165,27 +176,33 @@ Editor.propTypes = {
     title: PropTypes.string,
     renderPath: PropTypes.string,
   }).isRequired,
-  changeState: PropTypes.func.isRequired,
-  importFile: PropTypes.func.isRequired,
-  revertChanges: PropTypes.func.isRequired,
-  previewTemplate: PropTypes.func.isRequired,
-  initializeEditor: PropTypes.func.isRequired,
-  toggleModal: PropTypes.func.isRequired,
-  renderedValue: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired,
-  hosts: PropTypes.object.isRequired,
-  editorName: PropTypes.string.isRequired,
+  changeDiffViewType: PropTypes.func.isRequired,
+  changeEditorValue: PropTypes.func.isRequired,
+  changeSetting: PropTypes.func.isRequired,
+  changeTab: PropTypes.func.isRequired,
   diffViewType: PropTypes.string.isRequired,
-  mode: PropTypes.string.isRequired,
-  theme: PropTypes.string.isRequired,
-  keyBinding: PropTypes.string.isRequired,
-  selectedView: PropTypes.string.isRequired,
-  readOnly: PropTypes.bool.isRequired,
-  showError: PropTypes.bool.isRequired,
+  dismissErrorToast: PropTypes.func.isRequired,
+  editorName: PropTypes.string.isRequired,
   errorText: PropTypes.string.isRequired,
+  hosts: PropTypes.object.isRequired,
+  importFile: PropTypes.func.isRequired,
+  initializeEditor: PropTypes.func.isRequired,
   isMasked: PropTypes.bool.isRequired,
   isMaximized: PropTypes.bool.isRequired,
   isRendering: PropTypes.bool.isRequired,
+  keyBinding: PropTypes.string.isRequired,
+  mode: PropTypes.string.isRequired,
+  previewTemplate: PropTypes.func.isRequired,
+  readOnly: PropTypes.bool.isRequired,
+  renderedValue: PropTypes.string.isRequired,
+  revertChanges: PropTypes.func.isRequired,
+  selectedView: PropTypes.string.isRequired,
+  showError: PropTypes.bool.isRequired,
+  theme: PropTypes.string.isRequired,
+  toggleMaskValue: PropTypes.func.isRequired,
+  toggleModal: PropTypes.func.isRequired,
+  toggleRenderView: PropTypes.func.isRequired,
+  value: PropTypes.string.isRequired,
 };
 
 export default Editor;

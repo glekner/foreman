@@ -1,13 +1,20 @@
 import API from '../../API';
-import { translate } from '../../common/I18n';
+import { translate as __ } from '../../common/I18n';
 
 import {
-  EDITOR_INITIALIZE,
-  EDITOR_CHANGE_STATE,
-  EDITOR_IMPORT_FILE,
-  EDITOR_REVERT_CHANGES,
+  EDITOR_CHANGE_DIFF_VIEW,
+  EDITOR_CHANGE_SETTING,
+  EDITOR_CHANGE_TAB,
+  EDITOR_CHANGE_VALUE,
+  EDITOR_DISMISS_ERROR,
+  EDITOR_SHOW_ERROR,
   EDITOR_EXEC_PREVIEW,
+  EDITOR_IMPORT_FILE,
+  EDITOR_INITIALIZE,
   EDITOR_MODAL_TOGGLE,
+  EDITOR_REVERT_CHANGES,
+  EDITOR_TOGGLE_MASK,
+  EDITOR_TOGGLE_RENDER_VIEW,
 } from './EditorConstants';
 
 export const initializeEditor = initializeData => dispatch => {
@@ -51,23 +58,6 @@ export const initializeEditor = initializeData => dispatch => {
   });
 };
 
-export const changeState = newState => (dispatch, getState) => {
-  if (
-    // key exists in editor state
-    Object.prototype.hasOwnProperty.call(
-      getState().editor,
-      Object.keys(newState)[0]
-    )
-  ) {
-    dispatch({
-      type: EDITOR_CHANGE_STATE,
-      payload: {
-        newState,
-      },
-    });
-  }
-};
-
 export const importFile = e => dispatch => {
   const reader = new FileReader();
   reader.onload = event => {
@@ -104,27 +94,65 @@ export const previewTemplate = (host, template, url) => dispatch => {
       dispatch({
         type: EDITOR_EXEC_PREVIEW,
         payload: {
-          value: response.data,
+          renderedValue: response.data,
         },
       });
     })
-    .catch(error => {
-      const newState = {
-        errorText: translate(error.response.data),
-        showError: true,
-        renderedValue: translate(
-          'Error during rendering, Return to Editor tab.'
-        ),
-      };
+    .catch(error =>
       dispatch({
-        type: EDITOR_CHANGE_STATE,
+        type: EDITOR_SHOW_ERROR,
         payload: {
-          newState,
+          showError: true,
+          errorText: __(error.response.data),
+          renderedValue: __('Error during rendering, Return to Editor tab.'),
         },
-      });
-    });
+      })
+    );
 };
 
 export const toggleModal = () => ({
   type: EDITOR_MODAL_TOGGLE,
+});
+
+export const changeDiffViewType = viewType => dispatch => {
+  dispatch({
+    type: EDITOR_CHANGE_DIFF_VIEW,
+    payload: viewType,
+  });
+};
+
+export const changeEditorValue = value => dispatch => {
+  dispatch({
+    type: EDITOR_CHANGE_VALUE,
+    payload: value,
+  });
+};
+
+export const dismissErrorToast = () => dispatch => {
+  dispatch({
+    type: EDITOR_DISMISS_ERROR,
+    payload: { showError: false, errorText: '' },
+  });
+};
+
+export const changeTab = selectedView => dispatch => {
+  dispatch({
+    type: EDITOR_CHANGE_TAB,
+    payload: selectedView,
+  });
+};
+
+export const toggleMaskValue = () => ({
+  type: EDITOR_TOGGLE_MASK,
+});
+
+export const changeSetting = newSetting => dispatch => {
+  dispatch({
+    type: EDITOR_CHANGE_SETTING,
+    payload: newSetting,
+  });
+};
+
+export const toggleRenderView = isRendering => ({
+  type: EDITOR_TOGGLE_RENDER_VIEW,
 });

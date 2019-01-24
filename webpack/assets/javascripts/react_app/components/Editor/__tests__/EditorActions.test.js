@@ -2,11 +2,17 @@ import API from '../../../API';
 import { testActionSnapshotWithFixtures } from '../../../common/testHelpers';
 import {
   initializeEditor,
-  changeState,
   importFile,
   revertChanges,
   previewTemplate,
   toggleModal,
+  changeDiffViewType,
+  changeEditorValue,
+  dismissErrorToast,
+  changeTab,
+  toggleMaskValue,
+  changeSetting,
+  toggleRenderView,
 } from '../EditorActions';
 
 import { editorOptions, serverRenderResponse } from '../Editor.fixtures';
@@ -19,24 +25,24 @@ const runRenderTemplate = serverMock => {
   return previewTemplate(11, '<template />', 'some/url');
 };
 
-const runChangeState = newState => dispatch => {
-  const getState = () => ({
-    editor: {
-      value: '',
-      renderedValue: '',
-      mode: 'Ruby',
-      theme: 'Monokai',
-      keyBinding: 'Default',
-      selectedView: 'input',
-      editorName: 'editor',
-      isMaximized: false,
-      isMasked: false,
-      isRendering: false,
-      readOnly: false,
-    },
-  });
-  changeState(newState)(dispatch, getState);
-};
+// const runChangeState = newState => dispatch => {
+//   const getState = () => ({
+//     editor: {
+//       value: '',
+//       renderedValue: '',
+//       mode: 'Ruby',
+//       theme: 'Monokai',
+//       keyBinding: 'Default',
+//       selectedView: 'input',
+//       editorName: 'editor',
+//       isMaximized: false,
+//       isMasked: false,
+//       isRendering: false,
+//       readOnly: false,
+//     },
+//   });
+//   changeState(newState)(dispatch, getState);
+// };
 
 const e = { target: { files: [new File([new Blob()], 'filename')] } };
 
@@ -73,11 +79,21 @@ const fixtures = {
 
   'should toggleModal': () => toggleModal(),
 
-  'should change mode to Html': () => runChangeState({ mode: 'Html' }),
+  'should change mode to Html': () => changeSetting({ mode: 'Html' }),
 
-  'should not change state': () => runChangeState({ notInState: 'notInState' }),
+  'should changeDiffViewType': () => changeDiffViewType('unified'),
+
+  'should changeEditorValue': () => changeEditorValue('</>'),
+
+  'should dismissErrorToast': () => dismissErrorToast(),
+
+  'should changeTab': () => changeTab('diff'),
 
   'should revertChanges': () => revertChanges('<template />'),
+
+  'should toggleMaskValue': () => toggleMaskValue(),
+
+  'should toggleRenderView': () => toggleRenderView(),
 
   'should previewTemplate and succeed': () =>
     runRenderTemplate(async () => serverRenderResponse),

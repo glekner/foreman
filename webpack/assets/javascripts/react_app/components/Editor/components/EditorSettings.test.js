@@ -10,7 +10,7 @@ const fixtures = {
     mode: 'Ruby',
     theme: 'Github',
     keyBinding: 'vim',
-    changeState: noop,
+    changeSetting: noop,
   },
 };
 

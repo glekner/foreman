@@ -5,7 +5,9 @@ exports[`Editor rendering renders editor 1`] = `
   id="editor-container"
 >
   <EditorNavbar
-    changeState={[Function]}
+    changeDiffViewType={[Function]}
+    changeSetting={[Function]}
+    changeTab={[Function]}
     diffViewType="split"
     hosts={
       Object {
@@ -52,7 +54,9 @@ exports[`Editor rendering renders editor 1`] = `
         "Monokai",
       ]
     }
+    toggleMaskValue={[Function]}
     toggleModal={[Function]}
+    toggleRenderView={[Function]}
     value="value"
   />
   <ToastNotification
@@ -85,7 +89,8 @@ exports[`Editor rendering renders editor 1`] = `
     />
   </div>
   <EditorModal
-    changeState={[Function]}
+    changeDiffViewType={[Function]}
+    changeEditorValue={[Function]}
     diffViewType="split"
     editorValue="value"
     isMasked={false}

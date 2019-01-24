@@ -20,29 +20,33 @@ class EditorNavbar extends React.Component {
   }
   render() {
     const {
-      value,
-      mode,
-      hosts,
-      renderPath,
-      template,
-      theme,
-      keyBinding,
-      modes,
-      themes,
+      changeDiffViewType,
+      changeSetting,
+      changeTab,
       diffViewType,
-      keyBindings,
-      changeState,
-      toggleModal,
-      revertChanges,
-      showPreview,
-      previewTemplate,
-      showHide,
-      showImport,
+      hosts,
       importFile,
-      selectedView,
       isDiff,
       isMasked,
       isRendering,
+      keyBinding,
+      keyBindings,
+      mode,
+      modes,
+      previewTemplate,
+      renderPath,
+      revertChanges,
+      selectedView,
+      showHide,
+      showImport,
+      showPreview,
+      template,
+      theme,
+      themes,
+      toggleMaskValue,
+      toggleModal,
+      toggleRenderView,
+      value,
     } = this.props;
 
     return (
@@ -53,9 +57,10 @@ class EditorNavbar extends React.Component {
             btnView="input"
             title={__('Editor')}
             onClick={() => {
-              if (selectedView !== 'input')
-                changeState({ selectedView: 'input' });
-              if (isRendering) changeState({ isRendering: false });
+              if (selectedView !== 'input') {
+                if (isRendering) toggleRenderView();
+                changeTab('input');
+              }
             }}
           />
           <EditorRadioButton
@@ -64,9 +69,9 @@ class EditorNavbar extends React.Component {
             btnView="diff"
             title={__('Changes')}
             onClick={() => {
-              if (selectedView !== 'diff')
-                changeState({ selectedView: 'diff' });
-              if (isRendering) changeState({ isRendering: false });
+              if (selectedView !== 'diff') {
+                changeTab('diff');
+              }
             }}
           />
           {showPreview && (
@@ -76,9 +81,10 @@ class EditorNavbar extends React.Component {
                 btnView="preview"
                 title={__('Preview')}
                 onClick={() => {
-                  if (selectedView !== 'preview')
-                    changeState({ selectedView: 'preview' });
-                  if (!isRendering) changeState({ isRendering: true });
+                  if (selectedView !== 'preview') {
+                    if (!isRendering) toggleRenderView();
+                    changeTab('preview');
+                  }
                 }}
               />
 
@@ -112,7 +118,10 @@ class EditorNavbar extends React.Component {
           importFile={importFile}
           template={template}
           revertChanges={revertChanges}
-          changeState={changeState}
+          changeDiffViewType={changeDiffViewType}
+          toggleMaskValue={toggleMaskValue}
+          changeSetting={changeSetting}
+          changeTab={changeTab}
           toggleModal={toggleModal}
           selectedView={selectedView}
           mode={mode}
@@ -128,36 +137,40 @@ class EditorNavbar extends React.Component {
 }
 
 EditorNavbar.propTypes = {
-  value: PropTypes.string.isRequired,
-  mode: PropTypes.string.isRequired,
-  theme: PropTypes.string.isRequired,
-  template: PropTypes.string,
+  changeDiffViewType: PropTypes.func.isRequired,
+  changeSetting: PropTypes.func.isRequired,
+  changeTab: PropTypes.func.isRequired,
+  diffViewType: PropTypes.string.isRequired,
+  hosts: PropTypes.object,
+  importFile: PropTypes.func.isRequired,
+  isDiff: PropTypes.bool.isRequired,
+  isMasked: PropTypes.bool.isRequired,
+  isRendering: PropTypes.bool.isRequired,
   keyBinding: PropTypes.string.isRequired,
-  modes: PropTypes.array.isRequired,
-  themes: PropTypes.array.isRequired,
   keyBindings: PropTypes.array.isRequired,
-  changeState: PropTypes.func.isRequired,
-  toggleModal: PropTypes.func.isRequired,
+  mode: PropTypes.string.isRequired,
+  modes: PropTypes.array.isRequired,
+  previewTemplate: PropTypes.func.isRequired,
   renderPath: PropTypes.string,
   revertChanges: PropTypes.func.isRequired,
-  importFile: PropTypes.func.isRequired,
-  previewTemplate: PropTypes.func.isRequired,
-  hosts: PropTypes.object,
   selectedView: PropTypes.string.isRequired,
-  showPreview: PropTypes.bool.isRequired,
-  showImport: PropTypes.bool.isRequired,
   showHide: PropTypes.bool,
-  isMasked: PropTypes.bool.isRequired,
-  isDiff: PropTypes.bool.isRequired,
-  isRendering: PropTypes.bool.isRequired,
-  diffViewType: PropTypes.string.isRequired,
+  showImport: PropTypes.bool.isRequired,
+  showPreview: PropTypes.bool.isRequired,
+  template: PropTypes.string,
+  theme: PropTypes.string.isRequired,
+  themes: PropTypes.array.isRequired,
+  toggleMaskValue: PropTypes.func.isRequired,
+  toggleModal: PropTypes.func.isRequired,
+  toggleRenderView: PropTypes.func.isRequired,
+  value: PropTypes.string.isRequired,
 };
 
 EditorNavbar.defaultProps = {
-  showHide: false,
-  template: '',
   hosts: {},
   renderPath: '',
+  showHide: false,
+  template: '',
 };
 
 export default EditorNavbar;

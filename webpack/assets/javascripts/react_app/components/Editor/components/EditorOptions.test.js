@@ -16,7 +16,8 @@ describe('EditorOptions', () => {
     testComponentSnapshotsWithFixtures(EditorOptions, fixtures));
 
   describe('simulate onClick', () => {
-    const changeState = jest.fn();
+    const toggleMaskValue = jest.fn();
+    const changeTab = jest.fn();
     const revertChanges = jest.fn();
     jest.mock('./EditorOptions');
     window.confirm = jest.fn(() => true);
@@ -24,7 +25,8 @@ describe('EditorOptions', () => {
     const diffWrapper = mount(
       <EditorOptions
         {...props}
-        changeState={changeState}
+        changeTab={changeTab}
+        toggleMaskValue={toggleMaskValue}
         revertChanges={revertChanges}
         isDiff
         selectedView="diff"
@@ -34,7 +36,8 @@ describe('EditorOptions', () => {
     const inputWrapper = mount(
       <EditorOptions
         {...props}
-        changeState={changeState}
+        changeTab={changeTab}
+        toggleMaskValue={toggleMaskValue}
         revertChanges={revertChanges}
         isDiff
       />
@@ -53,7 +56,8 @@ describe('EditorOptions', () => {
       .at(0)
       .simulate('click');
 
-    expect(changeState).toHaveBeenCalledTimes(2);
+    expect(toggleMaskValue).toHaveBeenCalledTimes(1);
+    expect(changeTab).toHaveBeenCalledTimes(1);
     expect(window.confirm).toHaveBeenCalledTimes(1);
   });
 });

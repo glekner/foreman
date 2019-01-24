@@ -1,12 +1,19 @@
 import Immutable from 'seamless-immutable';
 
 import {
-  EDITOR_INITIALIZE,
-  EDITOR_CHANGE_STATE,
-  EDITOR_IMPORT_FILE,
-  EDITOR_REVERT_CHANGES,
+  EDITOR_CHANGE_DIFF_VIEW,
+  EDITOR_CHANGE_SETTING,
+  EDITOR_CHANGE_TAB,
+  EDITOR_CHANGE_VALUE,
+  EDITOR_DISMISS_ERROR,
+  EDITOR_SHOW_ERROR,
   EDITOR_EXEC_PREVIEW,
+  EDITOR_IMPORT_FILE,
+  EDITOR_INITIALIZE,
   EDITOR_MODAL_TOGGLE,
+  EDITOR_REVERT_CHANGES,
+  EDITOR_TOGGLE_MASK,
+  EDITOR_TOGGLE_RENDER_VIEW,
 } from './EditorConstants';
 
 const initialState = Immutable({
@@ -31,10 +38,6 @@ export default (state = initialState, action) => {
   const { payload } = action;
 
   switch (action.type) {
-    case EDITOR_CHANGE_STATE: {
-      return state.merge(payload.newState);
-    }
-
     case EDITOR_INITIALIZE: {
       return state.merge(payload);
     }
@@ -48,11 +51,43 @@ export default (state = initialState, action) => {
     }
 
     case EDITOR_EXEC_PREVIEW: {
-      return state.set('renderedValue', payload.value);
+      return state.set('renderedValue', payload.renderedValue);
     }
 
     case EDITOR_MODAL_TOGGLE: {
       return state.set('isMaximized', !state.isMaximized);
+    }
+
+    case EDITOR_CHANGE_DIFF_VIEW: {
+      return state.set('diffViewType', payload);
+    }
+
+    case EDITOR_CHANGE_VALUE: {
+      return state.set('value', payload);
+    }
+
+    case EDITOR_SHOW_ERROR: {
+      return state.merge(payload);
+    }
+
+    case EDITOR_DISMISS_ERROR: {
+      return state.merge(payload);
+    }
+
+    case EDITOR_CHANGE_TAB: {
+      return state.set('selectedView', payload);
+    }
+
+    case EDITOR_CHANGE_SETTING: {
+      return state.merge(payload);
+    }
+
+    case EDITOR_TOGGLE_MASK: {
+      return state.set('isMasked', !state.isMasked);
+    }
+
+    case EDITOR_TOGGLE_RENDER_VIEW: {
+      return state.set('isRendering', !state.isRendering);
     }
 
     default:

@@ -11,7 +11,7 @@ export const revertTemplate = ({ dataset: { version, url } }) => {
     API.get(url, {}, { version })
       .then(res => {
         document.getElementById('primary_tab').click();
-        store.dispatch(editorActions.changeState({ value: res.data }));
+        store.dispatch(editorActions.changeEditorValue(res.data));
       })
       .catch(res => {
         alert(__(`Revert Failed, ${res}`));

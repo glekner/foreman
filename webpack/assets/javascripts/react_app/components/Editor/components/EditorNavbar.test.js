@@ -20,12 +20,12 @@ describe('EditorNavbar', () => {
     testComponentSnapshotsWithFixtures(EditorNavbar, fixtures));
 
   describe('simulate onClick', () => {
-    const changeState = jest.fn();
+    const changeTab = jest.fn();
 
     const wrapper = mount(
       <EditorNavbar
         {...props}
-        changeState={changeState}
+        changeTab={changeTab}
         isDiff
         isRendering
         selectedView="preview"
@@ -46,6 +46,6 @@ describe('EditorNavbar', () => {
       .find('#preview-navitem')
       .at(1)
       .simulate('click');
-    expect(changeState).toHaveBeenCalledTimes(4);
+    expect(changeTab).toHaveBeenCalledTimes(2);
   });
 });

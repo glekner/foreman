@@ -7,7 +7,8 @@ import DiffRadioButtons from '../../DiffView/DiffRadioButtons';
 import DiffView from '../../DiffView/DiffView';
 
 const EditorModal = ({
-  changeState,
+  changeEditorValue,
+  changeDiffViewType,
   toggleModal,
   mode,
   keyBinding,
@@ -37,7 +38,7 @@ const EditorModal = ({
       {selectedView === 'diff' && (
         <DiffRadioButtons
           stateView={diffViewType}
-          changeState={viewType => changeState({ diffViewType: viewType })}
+          changeState={viewType => changeDiffViewType(viewType)}
         />
       )}
     </Modal.Header>
@@ -57,7 +58,7 @@ const EditorModal = ({
           mode={mode}
           theme={theme}
           keyBinding={keyBinding}
-          onChange={changeState}
+          onChange={changeEditorValue}
           readOnly={readOnly || selectedView === 'preview'}
           className="editor ace_editor_modal"
           isMasked={isMasked}
@@ -68,7 +69,8 @@ const EditorModal = ({
 );
 
 EditorModal.propTypes = {
-  changeState: PropTypes.func.isRequired,
+  changeEditorValue: PropTypes.func.isRequired,
+  changeDiffViewType: PropTypes.func.isRequired,
   toggleModal: PropTypes.func.isRequired,
   mode: PropTypes.string.isRequired,
   keyBinding: PropTypes.string.isRequired,

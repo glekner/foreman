@@ -1,10 +1,19 @@
 export const EDITOR_INITIALIZE = 'EDITOR_INITIALIZE';
-export const EDITOR_CHANGE_STATE = 'EDITOR_CHANGE_STATE';
 export const EDITOR_IMPORT_FILE = 'EDITOR_IMPORT_FILE';
 export const EDITOR_REVERT_CHANGES = 'EDITOR_REVERT_CHANGES';
 export const EDITOR_EXEC_PREVIEW = 'EDITOR_EXEC_PREVIEW';
 export const EDITOR_MODAL_TOGGLE = 'EDITOR_MODAL_TOGGLE';
+export const EDITOR_CHANGE_DIFF_VIEW = 'EDITOR_CHANGE_DIFF_VIEW';
+export const EDITOR_CHANGE_VALUE = 'EDITOR_CHANGE_VALUE';
+export const EDITOR_SHOW_ERROR = 'EDITOR_SHOW_ERROR';
+export const EDITOR_DISMISS_ERROR = 'EDITOR_DISMISS_ERROR';
+export const EDITOR_CHANGE_TAB = 'EDITOR_CHANGE_TAB';
+export const EDITOR_TOGGLE_MASK = 'EDITOR_TOGGLE_MASK';
+export const EDITOR_CHANGE_SETTING = 'EDITOR_CHANGE_SETTING';
+export const EDITOR_TOGGLE_RENDER_VIEW = 'EDITOR_TOGGLE_RENDER_VIEW';
 
+export const EDITOR_KEYBINDINGS = ['Default', 'Emacs', 'Vim'];
+export const EDITOR_THEMES = ['Github', 'Monokai'];
 export const EDITOR_MODES = [
   'Text',
   'Json',
@@ -14,7 +23,3 @@ export const EDITOR_MODES = [
   'Xml',
   'Yaml',
 ];
-
-export const EDITOR_KEYBINDINGS = ['Default', 'Emacs', 'Vim'];
-
-export const EDITOR_THEMES = ['Github', 'Monokai'];

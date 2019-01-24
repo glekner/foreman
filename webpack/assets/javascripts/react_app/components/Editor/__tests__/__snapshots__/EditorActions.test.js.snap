@@ -5,11 +5,56 @@ Array [
   Array [
     Object {
       "payload": Object {
-        "newState": Object {
-          "mode": "Html",
-        },
+        "mode": "Html",
       },
-      "type": "EDITOR_CHANGE_STATE",
+      "type": "EDITOR_CHANGE_SETTING",
+    },
+  ],
+]
+`;
+
+exports[`Editor actions should changeDiffViewType 1`] = `
+Array [
+  Array [
+    Object {
+      "payload": "unified",
+      "type": "EDITOR_CHANGE_DIFF_VIEW",
+    },
+  ],
+]
+`;
+
+exports[`Editor actions should changeEditorValue 1`] = `
+Array [
+  Array [
+    Object {
+      "payload": "</>",
+      "type": "EDITOR_CHANGE_VALUE",
+    },
+  ],
+]
+`;
+
+exports[`Editor actions should changeTab 1`] = `
+Array [
+  Array [
+    Object {
+      "payload": "diff",
+      "type": "EDITOR_CHANGE_TAB",
+    },
+  ],
+]
+`;
+
+exports[`Editor actions should dismissErrorToast 1`] = `
+Array [
+  Array [
+    Object {
+      "payload": Object {
+        "errorText": "",
+        "showError": false,
+      },
+      "type": "EDITOR_DISMISS_ERROR",
     },
   ],
 ]
@@ -61,8 +106,6 @@ Array [
 ]
 `;
 
-exports[`Editor actions should not change state 1`] = `Array []`;
-
 exports[`Editor actions should previewTemplate and fail 1`] = `Array []`;
 
 exports[`Editor actions should previewTemplate and succeed 1`] = `
@@ -70,7 +113,7 @@ Array [
   Array [
     Object {
       "payload": Object {
-        "value": "< renderedData />",
+        "renderedValue": "< renderedData />",
       },
       "type": "EDITOR_EXEC_PREVIEW",
     },
@@ -91,8 +134,20 @@ Array [
 ]
 `;
 
+exports[`Editor actions should toggleMaskValue 1`] = `
+Object {
+  "type": "EDITOR_TOGGLE_MASK",
+}
+`;
+
 exports[`Editor actions should toggleModal 1`] = `
 Object {
   "type": "EDITOR_MODAL_TOGGLE",
+}
+`;
+
+exports[`Editor actions should toggleRenderView 1`] = `
+Object {
+  "type": "EDITOR_TOGGLE_RENDER_VIEW",
 }
 `;

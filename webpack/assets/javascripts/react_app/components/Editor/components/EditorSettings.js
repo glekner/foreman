@@ -8,13 +8,14 @@ import {
   Icon,
   OverlayTrigger,
 } from 'patternfly-react';
+import { translate as __ } from '../../../common/I18n';
 
 const EditorSettings = ({
-  changeState,
-  modes,
-  mode,
-  keyBindings,
+  changeSetting,
   keyBinding,
+  keyBindings,
+  mode,
+  modes,
   theme,
   themes,
 }) => (
@@ -29,7 +30,7 @@ const EditorSettings = ({
               {modes.map((aceMode, i) => (
                 <MenuItem
                   key={i}
-                  onClick={() => changeState({ mode: aceMode })}
+                  onClick={() => changeSetting({ mode: aceMode })}
                 >
                   {aceMode}
                 </MenuItem>
@@ -45,7 +46,7 @@ const EditorSettings = ({
               {keyBindings.map((keyBind, i) => (
                 <MenuItem
                   key={i}
-                  onClick={() => changeState({ keyBinding: keyBind })}
+                  onClick={() => changeSetting({ keyBinding: keyBind })}
                 >
                   {keyBind}
                 </MenuItem>
@@ -61,7 +62,7 @@ const EditorSettings = ({
               {themes.map((themeKey, i) => (
                 <MenuItem
                   key={i}
-                  onClick={() => changeState({ theme: themeKey })}
+                  onClick={() => changeSetting({ theme: themeKey })}
                 >
                   {themeKey}
                 </MenuItem>
@@ -82,12 +83,13 @@ const EditorSettings = ({
 );
 
 EditorSettings.propTypes = {
-  changeState: PropTypes.func.isRequired,
-  modes: PropTypes.array.isRequired,
-  mode: PropTypes.string.isRequired,
-  keyBindings: PropTypes.array.isRequired,
+  changeSetting: PropTypes.func.isRequired,
   keyBinding: PropTypes.string.isRequired,
+  keyBindings: PropTypes.array.isRequired,
+  mode: PropTypes.string.isRequired,
+  modes: PropTypes.array.isRequired,
   theme: PropTypes.string.isRequired,
   themes: PropTypes.array.isRequired,
 };
+
 export default EditorSettings;

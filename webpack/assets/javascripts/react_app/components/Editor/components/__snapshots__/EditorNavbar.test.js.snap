@@ -63,7 +63,9 @@ exports[`EditorNavbar rendring renders EditorNavbar 1`] = `
     />
   </Nav>
   <EditorOptions
-    changeState={[Function]}
+    changeDiffViewType={[Function]}
+    changeSetting={[Function]}
+    changeTab={[Function]}
     diffViewType="split"
     hosts={
       Object {
@@ -110,6 +112,7 @@ exports[`EditorNavbar rendring renders EditorNavbar 1`] = `
         "Monokai",
       ]
     }
+    toggleMaskValue={[Function]}
     toggleModal={[Function]}
     value="value"
   />

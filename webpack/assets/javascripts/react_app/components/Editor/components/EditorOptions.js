@@ -28,24 +28,26 @@ class EditorOptions extends React.Component {
 
   render() {
     const {
-      showHide,
-      isMasked,
-      isDiff,
-      isRendering,
+      changeDiffViewType,
+      changeSetting,
+      changeTab,
       diffViewType,
       importFile,
-      revertChanges,
-      showImport,
-      changeState,
-      toggleModal,
-      selectedView,
+      isDiff,
+      isMasked,
+      keyBinding,
+      keyBindings,
       mode,
       modes,
-      keyBindings,
-      keyBinding,
+      revertChanges,
+      selectedView,
+      showHide,
+      showImport,
+      template,
       theme,
       themes,
-      template,
+      toggleMaskValue,
+      toggleModal,
     } = this.props;
 
     return (
@@ -53,7 +55,7 @@ class EditorOptions extends React.Component {
         {selectedView === 'diff' && (
           <DiffRadioButtons
             stateView={diffViewType}
-            changeState={viewType => changeState({ diffViewType: viewType })}
+            changeState={viewType => changeDiffViewType(viewType)}
           />
         )}
 
@@ -69,7 +71,7 @@ class EditorOptions extends React.Component {
               disabled={selectedView !== 'input'}
               className="editor-button"
               id="hide-btn"
-              onClick={() => changeState({ isMasked: !isMasked })}
+              onClick={() => toggleMaskValue(isMasked)}
               bsStyle="link"
             >
               <Icon size="lg" type="fa" name={isMasked ? 'eye' : 'eye-slash'} />
@@ -97,9 +99,7 @@ class EditorOptions extends React.Component {
                   )
                 ) {
                   revertChanges(template);
-                  if (selectedView !== 'input')
-                    changeState({ selectedView: 'input' });
-                  if (isRendering) changeState({ isRendering: false });
+                  if (selectedView !== 'input') changeTab('input');
                 }
               }}
               bsStyle="link"
@@ -143,7 +143,7 @@ class EditorOptions extends React.Component {
           </OverlayTrigger>
         )}
         <EditorSettings
-          changeState={changeState}
+          changeSetting={changeSetting}
           modes={modes}
           mode={mode}
           keyBindings={keyBindings}
@@ -172,24 +172,26 @@ class EditorOptions extends React.Component {
 }
 
 EditorOptions.propTypes = {
-  mode: PropTypes.string.isRequired,
-  theme: PropTypes.string.isRequired,
-  keyBinding: PropTypes.string.isRequired,
-  modes: PropTypes.array.isRequired,
-  themes: PropTypes.array.isRequired,
-  keyBindings: PropTypes.array.isRequired,
-  template: PropTypes.string,
-  changeState: PropTypes.func.isRequired,
-  toggleModal: PropTypes.func.isRequired,
-  revertChanges: PropTypes.func.isRequired,
-  importFile: PropTypes.func.isRequired,
-  selectedView: PropTypes.string.isRequired,
-  showImport: PropTypes.bool.isRequired,
-  showHide: PropTypes.bool,
-  isMasked: PropTypes.bool.isRequired,
-  isDiff: PropTypes.bool.isRequired,
-  isRendering: PropTypes.bool.isRequired,
+  changeDiffViewType: PropTypes.func.isRequired,
+  changeSetting: PropTypes.func.isRequired,
+  changeTab: PropTypes.func.isRequired,
   diffViewType: PropTypes.string.isRequired,
+  importFile: PropTypes.func.isRequired,
+  isDiff: PropTypes.bool.isRequired,
+  isMasked: PropTypes.bool.isRequired,
+  keyBinding: PropTypes.string.isRequired,
+  keyBindings: PropTypes.array.isRequired,
+  mode: PropTypes.string.isRequired,
+  modes: PropTypes.array.isRequired,
+  revertChanges: PropTypes.func.isRequired,
+  selectedView: PropTypes.string.isRequired,
+  showHide: PropTypes.bool,
+  showImport: PropTypes.bool.isRequired,
+  template: PropTypes.string,
+  theme: PropTypes.string.isRequired,
+  themes: PropTypes.array.isRequired,
+  toggleMaskValue: PropTypes.func.isRequired,
+  toggleModal: PropTypes.func.isRequired,
 };
 
 EditorOptions.defaultProps = {

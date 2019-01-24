@@ -18,22 +18,22 @@ import 'brace/keybinding/emacs';
 import { noop } from '../../../common/helpers';
 
 const EditorView = ({
-  value,
-  mode,
-  theme,
-  keyBinding,
-  onChange,
-  name,
   className,
-  readOnly,
   isMasked,
+  keyBinding,
+  mode,
+  name,
+  onChange,
+  readOnly,
+  theme,
+  value,
 }) => (
   <AceEditor
     value={value}
     mode={mode.toLowerCase()}
     theme={theme.toLowerCase()}
     keyboardHandler={keyBinding === 'Default' ? null : keyBinding.toLowerCase()}
-    onChange={(editorValue, event) => onChange({ value: editorValue })}
+    onChange={(editorValue, event) => onChange(editorValue)}
     name={name}
     className={isMasked ? `${className} mask-editor` : className}
     readOnly={readOnly}
@@ -54,8 +54,8 @@ EditorView.propTypes = {
   isMasked: PropTypes.bool.isRequired,
 };
 EditorView.defaultProps = {
-  value: '</>',
   className: '',
   onChange: noop,
+  value: '</>',
 };
 export default EditorView;

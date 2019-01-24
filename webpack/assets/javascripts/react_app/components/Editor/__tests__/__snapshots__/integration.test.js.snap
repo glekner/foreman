@@ -64,12 +64,8 @@ Object {
   "action": Array [
     Array [
       Object {
-        "payload": Object {
-          "newState": Object {
-            "isRendering": true,
-          },
-        },
-        "type": "EDITOR_CHANGE_STATE",
+        "payload": "preview",
+        "type": "EDITOR_CHANGE_TAB",
       },
     ],
   ],

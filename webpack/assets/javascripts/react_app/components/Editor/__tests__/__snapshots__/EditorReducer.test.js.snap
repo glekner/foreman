@@ -1,5 +1,45 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Editor reducer should handle EDITOR_CHANGE_DIFF_VIEW 1`] = `
+Object {
+  "diffViewType": "unified",
+  "editorName": "editor",
+  "errorText": "",
+  "hosts": Object {},
+  "isMasked": false,
+  "isMaximized": false,
+  "isRendering": false,
+  "keyBinding": "Default",
+  "mode": "Ruby",
+  "readOnly": false,
+  "renderedValue": "",
+  "selectedView": "input",
+  "showError": false,
+  "theme": "Monokai",
+  "value": "",
+}
+`;
+
+exports[`Editor reducer should handle EDITOR_CHANGE_SETTING 1`] = `
+Object {
+  "diffViewType": "split",
+  "editorName": "editor",
+  "errorText": "",
+  "hosts": Object {},
+  "isMasked": false,
+  "isMaximized": false,
+  "isRendering": false,
+  "keyBinding": "Default",
+  "mode": "html",
+  "readOnly": false,
+  "renderedValue": "",
+  "selectedView": "input",
+  "showError": false,
+  "theme": "Monokai",
+  "value": "",
+}
+`;
+
 exports[`Editor reducer should handle EDITOR_CHANGE_STATE 1`] = `
 Object {
   "diffViewType": "split",
@@ -16,7 +56,47 @@ Object {
   "selectedView": "input",
   "showError": false,
   "theme": "Monokai",
-  "value": "</>",
+  "value": "< newValue />",
+}
+`;
+
+exports[`Editor reducer should handle EDITOR_CHANGE_TAB 1`] = `
+Object {
+  "diffViewType": "split",
+  "editorName": "editor",
+  "errorText": "",
+  "hosts": Object {},
+  "isMasked": false,
+  "isMaximized": false,
+  "isRendering": false,
+  "keyBinding": "Default",
+  "mode": "Ruby",
+  "readOnly": false,
+  "renderedValue": "",
+  "selectedView": "diff",
+  "showError": false,
+  "theme": "Monokai",
+  "value": "",
+}
+`;
+
+exports[`Editor reducer should handle EDITOR_DISMISS_ERROR 1`] = `
+Object {
+  "diffViewType": "split",
+  "editorName": "editor",
+  "errorText": "",
+  "hosts": Object {},
+  "isMasked": false,
+  "isMaximized": false,
+  "isRendering": false,
+  "keyBinding": "Default",
+  "mode": "Ruby",
+  "readOnly": false,
+  "renderedValue": "",
+  "selectedView": "input",
+  "showError": false,
+  "theme": "Monokai",
+  "value": "",
 }
 `;
 
@@ -32,7 +112,7 @@ Object {
   "keyBinding": "Default",
   "mode": "Ruby",
   "readOnly": false,
-  "renderedValue": undefined,
+  "renderedValue": "</>",
   "selectedView": "input",
   "showError": false,
   "theme": "Monokai",
@@ -66,9 +146,6 @@ Object {
   "editorName": "editor",
   "errorText": "",
   "hosts": Object {},
-  "initialState": Object {
-    "value": "newValue",
-  },
   "isMasked": false,
   "isMaximized": false,
   "isRendering": false,
@@ -79,7 +156,7 @@ Object {
   "selectedView": "input",
   "showError": false,
   "theme": "Monokai",
-  "value": "",
+  "value": "newValue",
 }
 `;
 
@@ -120,6 +197,66 @@ Object {
   "showError": false,
   "theme": "Monokai",
   "value": "</>",
+}
+`;
+
+exports[`Editor reducer should handle EDITOR_SHOW_ERROR 1`] = `
+Object {
+  "diffViewType": "split",
+  "editorName": "editor",
+  "errorText": "error",
+  "hosts": Object {},
+  "isMasked": false,
+  "isMaximized": false,
+  "isRendering": false,
+  "keyBinding": "Default",
+  "mode": "Ruby",
+  "readOnly": false,
+  "renderedValue": "error",
+  "selectedView": "input",
+  "showError": true,
+  "theme": "Monokai",
+  "value": "",
+}
+`;
+
+exports[`Editor reducer should handle EDITOR_TOGGLE_MASK 1`] = `
+Object {
+  "diffViewType": "split",
+  "editorName": "editor",
+  "errorText": "",
+  "hosts": Object {},
+  "isMasked": true,
+  "isMaximized": false,
+  "isRendering": false,
+  "keyBinding": "Default",
+  "mode": "Ruby",
+  "readOnly": false,
+  "renderedValue": "",
+  "selectedView": "input",
+  "showError": false,
+  "theme": "Monokai",
+  "value": "",
+}
+`;
+
+exports[`Editor reducer should handle EDITOR_TOGGLE_RENDER_VIEW 1`] = `
+Object {
+  "diffViewType": "split",
+  "editorName": "editor",
+  "errorText": "",
+  "hosts": Object {},
+  "isMasked": false,
+  "isMaximized": false,
+  "isRendering": true,
+  "keyBinding": "Default",
+  "mode": "Ruby",
+  "readOnly": false,
+  "renderedValue": "",
+  "selectedView": "input",
+  "showError": false,
+  "theme": "Monokai",
+  "value": "",
 }
 `;
 

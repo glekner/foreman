@@ -126,7 +126,7 @@ exports[`EditorOptions EditorOptions renders EditorOptions 1`] = `
     </Button>
   </OverlayTrigger>
   <EditorSettings
-    changeState={[Function]}
+    changeSetting={[Function]}
     keyBinding="Default"
     keyBindings={
       Array [
