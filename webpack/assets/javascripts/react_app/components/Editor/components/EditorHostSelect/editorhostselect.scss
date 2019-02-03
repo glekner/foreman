@@ -1,0 +1,28 @@
+.editor-select-container {
+  width: 250px;
+  margin-bottom: auto;
+  margin-top: 2px;
+
+  .editor-select__control {
+    height: 30px;
+    min-height: 20px;
+  }
+
+  .editor-select__menu {
+    margin-top: 3px;
+
+    .editor-select__option {
+      padding: 4px 10px;
+
+      &:hover {
+        background: #0089c7;
+        color: white;
+      }
+
+      &:active {
+        background: #0089c7;
+        color: white;
+      }
+    }
+  }
+}

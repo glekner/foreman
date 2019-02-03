@@ -27,7 +27,7 @@ class Editor extends React.Component {
       showError,
     } = this.props;
 
-    const initializeData = {
+    initializeEditor({
       hosts,
       isMasked,
       isRendering,
@@ -38,8 +38,7 @@ class Editor extends React.Component {
       showError,
       template,
       type,
-    };
-    initializeEditor(initializeData);
+    });
   }
 
   render() {

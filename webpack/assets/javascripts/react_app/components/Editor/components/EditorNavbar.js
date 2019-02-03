@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Nav, TypeAheadSelect } from 'patternfly-react';
+import { Nav } from 'patternfly-react';
 import { translate as __ } from '../../../common/I18n';
 import { bindMethods } from '../../../common/helpers';
 
 import EditorRadioButton from './EditorRadioButton';
 import EditorOptions from './EditorOptions';
+import EditorHostSelect from './EditorHostSelect/EditorHostSelect';
 
 class EditorNavbar extends React.Component {
   constructor(props) {
@@ -87,19 +88,7 @@ class EditorNavbar extends React.Component {
                   }
                 }}
               />
-
-              <TypeAheadSelect
-                key="previewTypeAhead"
-                align="justify"
-                clearButton
-                options={Object.keys(hosts)}
-                onChange={this.renderHost}
-                labelKey="host"
-                placeholder={__('Pick a Host...')}
-                className={
-                  selectedView === 'preview' ? 'preview_type_ahead' : 'hidden'
-                }
-              />
+              {selectedView === 'preview' && <EditorHostSelect hosts={hosts} />}
             </React.Fragment>
           )}
         </Nav>

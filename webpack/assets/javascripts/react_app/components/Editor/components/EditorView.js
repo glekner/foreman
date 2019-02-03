@@ -1,4 +1,5 @@
 import React from 'react';
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import AceEditor from 'react-ace';
 
@@ -27,21 +28,29 @@ const EditorView = ({
   readOnly,
   theme,
   value,
-}) => (
-  <AceEditor
-    value={value}
-    mode={mode.toLowerCase()}
-    theme={theme.toLowerCase()}
-    keyboardHandler={keyBinding === 'Default' ? null : keyBinding.toLowerCase()}
-    onChange={(editorValue, event) => onChange(editorValue)}
-    name={name}
-    className={isMasked ? `${className} mask-editor` : className}
-    readOnly={readOnly}
-    editorProps={{ $blockScrolling: Infinity }}
-    showPrintMargin={false}
-    debounceChangePeriod={250}
-  />
-);
+}) => {
+  const classes = classNames(
+    { 'mask-editor': isMasked, 'read-only': readOnly },
+    className
+  );
+  return (
+    <AceEditor
+      value={value}
+      mode={mode.toLowerCase()}
+      theme={theme.toLowerCase()}
+      keyboardHandler={
+        keyBinding === 'Default' ? null : keyBinding.toLowerCase()
+      }
+      onChange={(editorValue, event) => onChange(editorValue)}
+      name={name}
+      className={classes}
+      readOnly={readOnly}
+      editorProps={{ $blockScrolling: Infinity }}
+      showPrintMargin={false}
+      debounceChangePeriod={250}
+    />
+  );
+};
 EditorView.propTypes = {
   mode: PropTypes.string.isRequired,
   theme: PropTypes.string.isRequired,

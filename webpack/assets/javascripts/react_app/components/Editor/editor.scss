@@ -98,11 +98,14 @@
 }
 
 .navbar-editor {
+  display: flex;
   padding: 2px !important;
   height: 40px;
   min-height: unset !important;
 
   .nav-tabs-pf-secondary {
+    display: flex;
+    align-items: baseline;
     float: left;
     background: unset !important;
     border-bottom: unset;
@@ -125,7 +128,7 @@
   }
 
   #editor-dropdowns {
-    float: right;
+    margin-left: auto;
 
     #diff-radio-buttons {
       float: left;
@@ -205,7 +208,19 @@
 }
 
 #editor-container {
+  #editor {
+    border-radius: 4px;
+
+    &.read-only {
+      .ace_layer {
+        z-index: 0;
+      }
+    }
+  }
+
   div.navbar-editor {
+    border-radius: 4px;
+
     .btn-link {
       outline: none;
     }
@@ -226,6 +241,12 @@
 }
 
 #cog-popover {
+  border-radius: 4px;
+
+  .popover-title {
+    border-radius: 4px;
+  }
+
   .cog-popover-dropdown {
     display: flex;
     align-items: center;
