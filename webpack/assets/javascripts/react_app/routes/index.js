@@ -3,8 +3,9 @@ import { Switch, Route } from 'react-router-dom';
 
 // Pages
 import Audits from './Audits';
+import HardwareModels from './HardwareModels';
 
-export const pages = [Audits];
+export const pages = [Audits, HardwareModels];
 
 let currentLocation = null;
 export default (
