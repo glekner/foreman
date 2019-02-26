@@ -5,10 +5,10 @@ import { Button, Icon, Spinner } from 'patternfly-react';
 import './auditspage.scss';
 
 import { translate as __ } from '../../../common/I18n';
+import AuditsPageEmptyState from './AuditsPageEmptyState';
 import PageLayout from '../../common/PageLayout/PageLayout';
 import AuditsList from '../../../components/AuditsList';
 import Pagination from '../../../components/Pagination/Pagination';
-import DefaultEmptyState from '../../../components/common/EmptyState';
 import { getParams } from '../../../components/Pagination/PaginationHelper';
 import {
   AUDITS_DOC_URL,
@@ -69,13 +69,7 @@ class AuditsPage extends Component {
         }
       >
         {showMessage ? (
-          <DefaultEmptyState
-            icon={message.type === 'error' ? 'error-circle-o' : 'add-circle-o'}
-            header={
-              message.type === 'error' ? __('Error') : __('No Audits Found')
-            }
-            description={message.text}
-          />
+          <AuditsPageEmptyState message={message} />
         ) : (
           <React.Fragment>
             {audits.length === 0 ? (

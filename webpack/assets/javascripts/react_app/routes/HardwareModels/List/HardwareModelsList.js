@@ -11,9 +11,9 @@ const HardwareModelsList = () => (
     searchable
     searchProps={HW_MODELS_SEARCH_PROPS}
     toolbarButtons={
-      <Button className="btn-docs">
-        <Link to={HW_MODELS_NEW_PATH}>{__('Create Model')}</Link>
-      </Button>
+      <Link to={HW_MODELS_NEW_PATH}>
+        <Button bsStyle="primary">{__('Create Model')}</Button>
+      </Link>
     }
   >
     <h1>TABLE</h1>
