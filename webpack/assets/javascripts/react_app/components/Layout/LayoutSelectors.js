@@ -5,6 +5,7 @@ export const selectLayout = state => state.layout;
 
 export const selectMenuItems = state => selectLayout(state).items;
 export const selectActiveMenu = state => selectLayout(state).activeMenu;
+export const selectSecondaryMenu = state => selectLayout(state).secondaryMenu;
 export const selectIsLoading = state => selectLayout(state).isLoading;
 export const selectCurrentLocation = state =>
   get(selectLayout(state), 'currentLocation.title');

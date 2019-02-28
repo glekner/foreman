@@ -20,6 +20,7 @@ class Layout extends React.Component {
       changeOrganization,
       currentOrganization,
       changeActiveMenu,
+      changeSecondaryItem,
       activeMenu,
     } = this.props;
     if (items.length === 0) fetchMenuItems(data);
@@ -27,6 +28,7 @@ class Layout extends React.Component {
     const activeURLMenu = getActive(data.menu, getCurrentPath());
     if (activeMenu !== activeURLMenu.title) {
       changeActiveMenu(activeURLMenu);
+      changeSecondaryItem(document && document.title);
     }
 
     if (
@@ -62,6 +64,7 @@ class Layout extends React.Component {
       changeActiveMenu,
       changeOrganization,
       changeLocation,
+      changeSecondaryItem,
       currentOrganization,
       currentLocation,
       activeMenu,
@@ -71,9 +74,10 @@ class Layout extends React.Component {
       <VerticalNav
         hoverDelay={0}
         items={items}
-        onItemClick={primary =>
-          handleMenuClick(primary, activeMenu, changeActiveMenu)
-        }
+        onItemClick={(primary, secondary) => {
+          handleMenuClick(primary, activeMenu, changeActiveMenu);
+          changeSecondaryItem(secondary);
+        }}
         activePath={`/${activeMenu}/`}
         {...this.props}
       >
@@ -121,6 +125,7 @@ Layout.propTypes = {
   changeActiveMenu: PropTypes.func,
   changeOrganization: PropTypes.func,
   changeLocation: PropTypes.func,
+  changeSecondaryItem: PropTypes.func,
   items: PropTypes.arrayOf(
     PropTypes.shape({
       title: PropTypes.string.isRequired,
@@ -198,6 +203,7 @@ Layout.defaultProps = {
   changeActiveMenu: noop,
   changeOrganization: noop,
   changeLocation: noop,
+  changeSecondaryItem: noop,
 };
 
 export default Layout;

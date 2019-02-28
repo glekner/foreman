@@ -113,6 +113,19 @@ Array [
 ]
 `;
 
+exports[`Layout actions should changeSecondaryItem 1`] = `
+Array [
+  Array [
+    Object {
+      "payload": Object {
+        "secondaryMenu": "secondaryItem",
+      },
+      "type": "LAYOUT_CHANGE_SECONDARY",
+    },
+  ],
+]
+`;
+
 exports[`Layout actions should fetchMenuItems 1`] = `
 Array [
   Array [

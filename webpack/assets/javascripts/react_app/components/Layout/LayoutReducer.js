@@ -7,18 +7,23 @@ import {
   LAYOUT_UPDATE_ITEMS,
   LAYOUT_CHANGE_ORG,
   LAYOUT_CHANGE_LOCATION,
+  LAYOUT_CHANGE_SECONDARY,
 } from './LayoutConstants';
 
 const initialState = Immutable({
   items: [],
   isLoading: false,
   activeMenu: '',
+  secondaryMenu: '',
   currentOrganization: { title: 'Any Organization' },
   currentLocation: { title: 'Any Location' },
 });
 
 export default (state = initialState, action) => {
-  const { payload: { items, activeMenu, org, location } = {}, type } = action;
+  const {
+    payload: { items, activeMenu, org, location, secondaryMenu } = {},
+    type,
+  } = action;
 
   switch (type) {
     case LAYOUT_SHOW_LOADING:
@@ -36,6 +41,9 @@ export default (state = initialState, action) => {
 
     case LAYOUT_CHANGE_LOCATION:
       return state.set('currentLocation', location);
+
+    case LAYOUT_CHANGE_SECONDARY:
+      return state.set('secondaryMenu', secondaryMenu);
 
     default:
       return state;

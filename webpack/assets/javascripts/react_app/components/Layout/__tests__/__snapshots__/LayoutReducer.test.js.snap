@@ -9,6 +9,7 @@ Object {
   },
   "isLoading": false,
   "items": Array [],
+  "secondaryMenu": "",
 }
 `;
 
@@ -21,6 +22,7 @@ Object {
   "currentOrganization": "org1",
   "isLoading": false,
   "items": Array [],
+  "secondaryMenu": "",
 }
 `;
 
@@ -35,6 +37,7 @@ Object {
   },
   "isLoading": false,
   "items": Array [],
+  "secondaryMenu": "",
 }
 `;
 
@@ -49,6 +52,7 @@ Object {
   },
   "isLoading": true,
   "items": Array [],
+  "secondaryMenu": "",
 }
 `;
 
@@ -85,6 +89,7 @@ Object {
       "title": "Configure",
     },
   ],
+  "secondaryMenu": "",
 }
 `;
 
@@ -121,6 +126,7 @@ Object {
       "title": "Configure",
     },
   ],
+  "secondaryMenu": "",
 }
 `;
 
@@ -135,5 +141,6 @@ Object {
   },
   "isLoading": false,
   "items": Array [],
+  "secondaryMenu": "",
 }
 `;

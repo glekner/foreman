@@ -6,6 +6,7 @@ import {
   fetchMenuItems,
   changeOrganization,
   changeLocation,
+  changeSecondaryItem,
 } from '../LayoutActions';
 
 import { layoutMock, serverItems } from '../Layout.fixtures';
@@ -31,6 +32,8 @@ const fixtures = {
   'should changeOrganization': () => changeOrganization('org1'),
 
   'should changeLocation': () => changeLocation('loc1'),
+
+  'should changeSecondaryItem': () => changeSecondaryItem('secondaryItem'),
 };
 
 describe('Layout actions', () => testActionSnapshotWithFixtures(fixtures));

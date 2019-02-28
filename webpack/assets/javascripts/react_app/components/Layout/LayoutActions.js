@@ -6,6 +6,7 @@ import {
   LAYOUT_UPDATE_ITEMS,
   LAYOUT_CHANGE_LOCATION,
   LAYOUT_CHANGE_ORG,
+  LAYOUT_CHANGE_SECONDARY,
 } from './LayoutConstants';
 
 export const showLoading = () => ({
@@ -55,5 +56,12 @@ export const changeLocation = location => dispatch => {
     payload: {
       location,
     },
+  });
+};
+
+export const changeSecondaryItem = secondaryMenu => dispatch => {
+  dispatch({
+    type: LAYOUT_CHANGE_SECONDARY,
+    payload: { secondaryMenu },
   });
 };

@@ -9,6 +9,7 @@ exports[`Layout rendering renders layout 1`] = `
   changeActiveMenu={[Function]}
   changeLocation={[Function]}
   changeOrganization={[Function]}
+  changeSecondaryItem={[Function]}
   currentLocation="Any Location"
   currentOrganization="Any Organization"
   data={
