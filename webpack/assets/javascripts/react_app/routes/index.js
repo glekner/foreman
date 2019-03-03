@@ -7,7 +7,6 @@ import HardwareModels from './HardwareModels';
 
 export const pages = [Audits, HardwareModels];
 
-let currentLocation = null;
 export default (
   <Switch>
     {pages.map(({ render, ...props }) => (
@@ -21,19 +20,9 @@ export default (
           if (railsApplicationContent) {
             railsApplicationContent.remove();
           }
-          currentLocation = renderProps.location;
           return render(renderProps);
         }}
       />
     ))}
-    <Route
-      render={({ location }) => {
-        if (currentLocation && currentLocation.pathname !== location.pathname) {
-          window.Turbolinks.visit(location.pathname);
-        }
-        currentLocation = location;
-        return null;
-      }}
-    />
   </Switch>
 );

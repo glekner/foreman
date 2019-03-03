@@ -1,7 +1,4 @@
 module AuditsHelper
-  MAIN_OBJECTS = %w(Host::Base Hostgroup User Operatingsystem Environment Puppetclass Parameter Architecture ComputeResource ProvisioningTemplate ComputeProfile ComputeAttribute
-                    Location Organization Domain Subnet SmartProxy AuthSource Image Role Usergroup Bookmark ConfigGroup Ptable ReportTemplate)
-
   # lookup the Model representing the numerical id and return its label
   def id_to_label(name, change, audit: @audit, truncate: true)
     return _("N/A") if change.nil?
@@ -44,7 +41,7 @@ module AuditsHelper
     type_name = audited_type audit
     case type_name
       when 'Puppet Class'
-        (id_to_label audit.audited_changes.keys[0], audit.audited_changes.values[0]).to_s
+        (id_to_label audit.audited_changes.keys[0], audit.audited_changes.values[0], audit: audit).to_s
       else
         name = if audit.auditable_name.blank?
                  revision = audit.revision
@@ -235,14 +232,17 @@ module AuditsHelper
   end
 
   def main_object?(audit)
-    return true if MAIN_OBJECTS.include?(audit.auditable_type)
+    main_objects_names = Audit.main_object_names
+    return true if main_objects_names.include?(audit.auditable_type)
     type = audit.auditable_type.split("::").last rescue ''
-    MAIN_OBJECTS.include?(type)
+    main_objects_names.include?(type)
   end
 
   def key_to_class(key, audit)
     auditable_type = (audit.auditable_type == 'Host::Base') ? 'Host::Managed' : audit.auditable_type
-    auditable_type.constantize.reflect_on_association(key.sub(/_id(s?)$/, '\1'))&.klass
+    association_name = key.gsub(/_id(s?)$/, '')
+    association_name = association_name.pluralize if key =~ /_ids$/
+    auditable_type.constantize.reflect_on_association(association_name)&.klass
   end
 
   def rebuild_audit_changes(audit)
