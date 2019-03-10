@@ -38,6 +38,12 @@ class AutoComplete extends React.Component {
     this.unableHTMLAutocomplete();
   }
 
+  componentDidUpdate(prevProps) {
+    const { initialQuery } = this.props;
+    if (prevProps.initialQuery !== initialQuery)
+      this._typeahead.current.getInstance().setState({ text: initialQuery });
+  }
+
   windowKeyPressHandler(e) {
     const { useKeyShortcuts, handleSearch } = this.props;
     const instance = this._typeahead.current.getInstance();
@@ -163,18 +169,20 @@ class AutoComplete extends React.Component {
       placeholder,
       results,
       useKeyShortcuts,
+      showLoading,
     } = this.props;
+
     /** Using a 3rd party library (react-bootstrap-typeahead) that expects a mutable array. */
     const options = Immutable.isImmutable(results)
       ? results.asMutable()
       : results;
     return (
-      <div className="foreman-autocomplete">
+      <div>
         <TypeAheadSelect
           ref={this._typeahead}
           defaultInputValue={initialQuery}
           options={options}
-          isLoading={this.handleLoading()}
+          isLoading={this.handleLoading() || showLoading}
           onInputChange={this.handleInputChange}
           onChange={this.handleResultsChange}
           onFocus={this.handleInputFocus}
@@ -217,6 +225,7 @@ AutoComplete.propTypes = {
   placeholder: PropTypes.string,
   emptyLabel: PropTypes.string,
   url: PropTypes.string,
+  showLoading: PropTypes.bool,
 };
 
 AutoComplete.defaultProps = {
@@ -235,6 +244,7 @@ AutoComplete.defaultProps = {
   placeholder: 'Filter ...',
   emptyLabel: null,
   url: null,
+  showLoading: false,
 };
 
 AutoComplete.SearchButton = AutoCompleteSearchButton;
