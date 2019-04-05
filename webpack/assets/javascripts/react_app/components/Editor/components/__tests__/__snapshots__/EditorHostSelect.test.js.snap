@@ -1,0 +1,61 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EditorHostSelect should render renders EditorHostSelect 1`] = `
+<EditorHostSelect
+  isLoading={false}
+  onChange={[Function]}
+  onSearchChange={[Function]}
+  onSearchClear={[Function]}
+  onToggle={[Function]}
+  open={true}
+  options={
+    Array [
+      Object {
+        "id": "1",
+        "name": "host1",
+      },
+      Object {
+        "id": "2",
+        "name": "host2",
+      },
+    ]
+  }
+  searchQuery=""
+  selectedItem={
+    Object {
+      "id": "1",
+      "name": "one",
+    }
+  }
+/>
+`;
+
+exports[`EditorHostSelect should render renders EditorHostSelect loading 1`] = `
+<EditorHostSelect
+  isLoading={true}
+  onChange={[Function]}
+  onSearchChange={[Function]}
+  onSearchClear={[Function]}
+  onToggle={[Function]}
+  open={true}
+  options={
+    Array [
+      Object {
+        "id": "1",
+        "name": "host1",
+      },
+      Object {
+        "id": "2",
+        "name": "host2",
+      },
+    ]
+  }
+  searchQuery=""
+  selectedItem={
+    Object {
+      "id": "1",
+      "name": "one",
+    }
+  }
+/>
+`;
