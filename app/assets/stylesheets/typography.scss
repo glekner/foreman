@@ -1,17 +1,16 @@
 @font-face {
   font-family: 'Overpass';
-  src: local("Overpass"), font-url('overpass_regular-web.woff') format("woff");
-  font-weight: normal;
+  src: local("Overpass"), font-url('overpass_thin.woff') format("woff");
+  font-weight: 100;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Overpass';
   src:
-    local("Overpass Bold"),
-    local("OverpassBold"),
-    font-url('overpass_bold-web.woff') format("woff");
-  font-weight: bold;
+    local("Overpass"),
+    font-url('overpass_regular-web.woff') format("woff");
+  font-weight: normal;
   font-style: normal;
 }
 

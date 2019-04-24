@@ -1,9 +1,12 @@
+@import '~patternfly/react-core/dist/styles/base.css';
+
 html {
   height: 100%;
   overflow: auto;
 }
 
 body {
+  font-family: 'Overpass', Interstate, sans-serif;
   height: 100%;
 }
 
@@ -507,7 +510,7 @@ table {
 .select2-container .select2-choices .select2-search-field input,
 .select2-container .select2-choice,
 .select2-container .select2-choices .select2-chosen {
-  font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+  font-family: 'Overpass', Helvetica, Arial, sans-serif;
   line-height: 2;
 }
 
