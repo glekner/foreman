@@ -39,7 +39,7 @@ export const getURIsearch = () => getURI().query(true).search || '';
  */
 export const getParams = () => ({
   page: getURIpage(),
-  perPage: getURIperPage(),
+  perPage: getURIperPage() || 25,
   searchQuery: getURIsearch(),
 });
 

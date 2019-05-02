@@ -32,9 +32,6 @@ import TemplateInput from './Template/TemplateInput';
 import Editor from './Editor';
 import LoginPage from './LoginPage';
 
-// Pages
-import AuditsPage from '../pages/AuditsPage/AuditsPage';
-
 const componentRegistry = {
   registry: {},
 
@@ -151,9 +148,6 @@ const coreComponets = [
   { name: 'FormField', type: FormField, store: false },
   { name: 'ModelsTable', type: ModelsTable },
   { name: 'Editor', type: Editor },
-
-  // Pages
-  { name: 'AuditsPage', type: AuditsPage },
 
   // Report templates
   { name: 'TemplateGenerator', type: TemplateGenerator },
