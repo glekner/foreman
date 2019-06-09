@@ -10,7 +10,11 @@ const StatisticsPage = ({ statisticsMeta, ...props }) => (
 );
 
 StatisticsPage.propTypes = {
-  statisticsMeta: PropTypes.array.isRequired,
+  statisticsMeta: PropTypes.array,
+};
+
+StatisticsPage.defaultProps = {
+  statisticsMeta: [],
 };
 
 export default StatisticsPage;

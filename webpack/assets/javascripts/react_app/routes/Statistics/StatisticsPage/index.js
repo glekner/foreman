@@ -1,9 +1,10 @@
-import { compose, bindActionCreators } from 'redux';
+import { compose, bindActionCreators, combineReducers } from 'redux';
 import { connect } from 'react-redux';
 import { callOnMount } from '../../../common/HOC';
 
 import * as actions from './StatisticsPageActions';
-import reducer from './StatisticsPageReducer';
+import charts from './StatisticsPageReducer';
+import withDataReducer from '../../common/withDataReducer';
 import {
   selectStatisticsMetadata,
   selectStatisticsMessage,
@@ -29,7 +30,12 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 
 // export reducers
-export const reducers = { statisticsPage: reducer };
+export const reducers = {
+  statisticsPage: combineReducers({
+    page: charts,
+    data: withDataReducer('STATISTICS'),
+  }),
+};
 
 // export connected component
 export default compose(

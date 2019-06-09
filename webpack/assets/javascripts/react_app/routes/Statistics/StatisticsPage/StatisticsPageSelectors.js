@@ -1,13 +1,15 @@
-export const selectStatisticsPage = state => state.statisticsPage;
+export const selectStatisticsPage = state => state.statisticsPage.page;
+export const selectStatisticsData = state => state.statisticsPage.data;
+
 export const selectStatisticsCharts = state =>
   selectStatisticsPage(state).charts;
 export const selectStatisticsMetadata = state =>
-  selectStatisticsPage(state).statisticsMeta;
+  selectStatisticsData(state).data;
 export const selectStatisticsIsLoading = state =>
-  selectStatisticsPage(state).isLoading;
+  selectStatisticsData(state).isLoading;
 export const selectStatisticsMessage = state =>
-  selectStatisticsPage(state).message;
+  selectStatisticsData(state).message;
 export const selectStatisticsHasError = state =>
-  selectStatisticsPage(state).hasError;
+  selectStatisticsData(state).hasError;
 export const selectStatisticsHasMetadata = state =>
-  selectStatisticsMetadata(state).length > 0;
+  !!selectStatisticsMetadata(state);

@@ -1,8 +1,8 @@
 import API from '../../../API';
 
 import {
-  STATISTICS_PAGE_META_RESOLVED,
-  STATISTICS_PAGE_META_FAILED,
+  STATISTICS_PAGE_DATA_RESOLVED,
+  STATISTICS_PAGE_DATA_FAILED,
   STATISTICS_PAGE_HIDE_LOADING,
   STATISTICS_PAGE_URL,
   STATISTICS_DATA_REQUEST,
@@ -17,15 +17,15 @@ export const getStatisticsMeta = (
   const onFetchSuccess = ({ data }) => {
     dispatch(hideLoading());
     dispatch({
-      type: STATISTICS_PAGE_META_RESOLVED,
-      payload: data,
+      type: STATISTICS_PAGE_DATA_RESOLVED,
+      payload: { data },
     });
   };
 
   const onFetchError = ({ message }) => {
     dispatch(hideLoading());
     dispatch({
-      type: STATISTICS_PAGE_META_FAILED,
+      type: STATISTICS_PAGE_DATA_FAILED,
       payload: {
         hasError: true,
         message: {
